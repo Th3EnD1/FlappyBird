@@ -15,7 +15,7 @@ public class Bird extends Thread
 {
     GameManager gamePanel;
     int x = GameManager.width / 2 - 10, y = GameManager.height / 2 - 10;
-    int size = 50;
+    int size = 35;
     Image birdImage;
     int yMotion;
     int ticks;
@@ -30,7 +30,7 @@ public class Bird extends Thread
     
     public void drawBird(Graphics g)
     {
-        g.drawImage(birdImage, x,y, size + 20, size, null);
+        g.drawImage(birdImage, x, y, size + 15, size, null);
     }
     
     public void run()
@@ -52,7 +52,7 @@ public class Bird extends Thread
             
             if(y + yMotion >= GameManager.height - 130)
             {
-                y = GameManager.height - 130;
+                y = GameManager.height - 115;
             }
             
             gamePanel.repaint();

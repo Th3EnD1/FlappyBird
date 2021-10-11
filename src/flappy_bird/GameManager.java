@@ -17,11 +17,12 @@ public class GameManager extends JPanel
 {
     Bird bird;
     Pipe pipe;
-    ArrayList<Pipe> pipes;
+    public ArrayList<Pipe> pipes;
     Image backgroundImage;
     static int width;
     static int height;
     boolean started, gameOver;
+    int score;
     
     public GameManager()
     {
@@ -35,11 +36,49 @@ public class GameManager extends JPanel
         pipes.add(new Pipe(this));
     }
     
+    public void addPipe(boolean start)
+    {
+        if(start)
+        {
+            pipes.add(new Pipe(this));
+        }
+        else
+        {
+            
+        }
+    }
+    
     public void Jump()
     {
         if(gameOver)
         {
+            bird = new Bird(this);
+            pipes.clear();
+            bird.yMotion = 0;
+            score = 0;
             
+            //------ Call 4 times to addPipe with the parameter true in order ------
+            //------ to spawn new pipes that fit to the start of the game     ------
+            addPipe(true);
+            addPipe(true);
+            addPipe(true);
+            addPipe(true);
+            
+            gameOver = true;
+        }
+        
+        if(!started)
+        {
+            started = true;
+        }
+        else if (!gameOver)
+        {
+            if(bird.yMotion > 0)
+            {
+                bird.yMotion = 0;
+            }
+            
+            bird.yMotion -= 10;
         }
     }
     

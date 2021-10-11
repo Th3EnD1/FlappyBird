@@ -17,8 +17,8 @@ public class Pipe extends Thread
 {
     GameManager gamePanel;
     Random rand = new Random();
-    int x = GameManager.width;
-    int y = 0;
+    int x = GameManager.width + 50;
+    int y = rand.nextInt((GameManager.height - 100) - 150) + 150;
     int size = 300;
     boolean isAlive;
     Image topImage;
@@ -35,8 +35,9 @@ public class Pipe extends Thread
     
     public void drawPipe(Graphics g)
     {
-        g.drawImage(bottomImage, x, y + 500, size, size, null);
-        g.drawImage(topImage, x, y, size, size, null);
+        g.drawImage(topImage, x, y - 450 - 200, size, size + 200, null);
+        g.drawImage(bottomImage, x, y, size, /*size*/ size + 200, null);
+        
     }
     
     public void run()
@@ -51,7 +52,7 @@ public class Pipe extends Thread
             
             x -= 10;
             
-            if(x < -50)
+            if(x < -200)
             {
                 isAlive = false;
             }
