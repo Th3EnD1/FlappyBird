@@ -21,6 +21,7 @@ public class Pipe extends Thread
     int y = rand.nextInt((GameManager.height - 100) - 150) + 150;
     int size = 300;
     boolean isAlive;
+    boolean createdAnother;
     Image topImage;
     Image bottomImage;
     
@@ -28,6 +29,7 @@ public class Pipe extends Thread
     {
         this.gamePanel = gamePanel;
         isAlive = true;
+        createdAnother = false;
         topImage = (new ImageIcon("topPipe.png")).getImage();
         bottomImage = (new ImageIcon("bottomPipe.png")).getImage();
         start();
@@ -37,7 +39,7 @@ public class Pipe extends Thread
     {
         g.drawImage(topImage, x, y - 450 - 200, size, size + 200, null);
         g.drawImage(bottomImage, x, y, size, /*size*/ size + 200, null);
-        
+        System.out.println("drawing pipe");
     }
     
     public void run()
@@ -56,6 +58,12 @@ public class Pipe extends Thread
             {
                 isAlive = false;
             }
+            
+//            if(x == GameManager.width / 2 && !createdAnother)
+//            {
+//                gamePanel.pipes.add(new Pipe(gamePanel));
+//                createdAnother = true;
+//            }
             
             gamePanel.repaint();
         }

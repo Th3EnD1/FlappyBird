@@ -6,6 +6,8 @@
 package flappy_bird;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -23,29 +25,29 @@ public class GameManager extends JPanel
     static int height;
     boolean started, gameOver;
     int score;
+    long lastPipe;
+    long cooldownTime;
     
     public GameManager()
     {
         width = 1200;
         height = 700;
+        lastPipe = 0;
+        cooldownTime = 2000;// 2000 milliseconds
         backgroundImage = (new ImageIcon("background.jpg")).getImage();
         bird = new Bird(this);
         pipe = new Pipe(this);
         pipes = new ArrayList<Pipe>();
         
-        pipes.add(new Pipe(this));
-    }
-    
-    public void addPipe(boolean start)
-    {
-        if(start)
-        {
-            pipes.add(new Pipe(this));
-        }
-        else
-        {
-            
-        }
+        //pipes.add(new Pipe(this));
+        
+        addMouseListener(new MouseAdapter() 
+        { 
+            public void mousePressed(MouseEvent me) 
+            { 
+                Jump();
+            }
+        });
     }
     
     public void Jump()
@@ -56,14 +58,6 @@ public class GameManager extends JPanel
             pipes.clear();
             bird.yMotion = 0;
             score = 0;
-            
-            //------ Call 4 times to addPipe with the parameter true in order ------
-            //------ to spawn new pipes that fit to the start of the game     ------
-            addPipe(true);
-            addPipe(true);
-            addPipe(true);
-            addPipe(true);
-            
             gameOver = true;
         }
         
@@ -88,12 +82,21 @@ public class GameManager extends JPanel
 	g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),null);	
         bird.drawBird(g);
         
+        long time = System.currentTimeMillis();
+        if (time > lastPipe + cooldownTime && started)
+        {
+            pipes.add(new Pipe(this));
+            lastPipe = time;
+        }
+        
         for (int i = 0; i < pipes.size(); i++) 
         {
             Pipe temp = pipes.get(i);
+            
             if (temp.isAlive)
             {
                 temp.drawPipe(g);
+                //addPipe(started);
             }
             else
             {
