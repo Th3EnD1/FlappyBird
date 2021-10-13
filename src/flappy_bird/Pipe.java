@@ -59,12 +59,6 @@ public class Pipe extends Thread
                 isAlive = false;
             }
             
-//            if(x == GameManager.width / 2 && !createdAnother)
-//            {
-//                gamePanel.pipes.add(new Pipe(gamePanel));
-//                createdAnother = true;
-//            }
-            
             gamePanel.repaint();
         }
     }
