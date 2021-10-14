@@ -17,6 +17,7 @@ import javax.swing.*;
  */
 public class GameManager extends JPanel
 {
+    public static GameManager game;
     Bird bird;
     Pipe pipe;
     public ArrayList<Pipe> pipes;
@@ -33,24 +34,22 @@ public class GameManager extends JPanel
         width = 1200;
         height = 700;
         lastPipe = 0;
-        cooldownTime = 2000;// 2000 milliseconds
+        cooldownTime = 1500;// 2000 milliseconds
         backgroundImage = (new ImageIcon("background.jpg")).getImage();
         bird = new Bird(this);
         pipe = new Pipe(this);
         pipes = new ArrayList<Pipe>();
         
-        //pipes.add(new Pipe(this));
-        
         addMouseListener(new MouseAdapter() 
         { 
             public void mousePressed(MouseEvent me) 
             { 
-                Jump();
+                jump();
             }
         });
     }
     
-    public void Jump()
+    public void jump()
     {
         if(gameOver)
         {
@@ -58,7 +57,7 @@ public class GameManager extends JPanel
             pipes.clear();
             bird.yMotion = 0;
             score = 0;
-            gameOver = true;
+            gameOver = false;
         }
         
         if(!started)
@@ -72,14 +71,14 @@ public class GameManager extends JPanel
                 bird.yMotion = 0;
             }
             
-            bird.yMotion -= 10;
+            bird.yMotion -= 14;
         }
     }
     
     public void paintComponent(Graphics g)	
     {
 	super.paintComponent(g);
-	g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),null);	
+	g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),null);
         bird.drawBird(g);
         
         long time = System.currentTimeMillis();
@@ -106,19 +105,16 @@ public class GameManager extends JPanel
         }
     }
     
-    public static void main(String[] args) 
+    public static void main(String[] args)
     {
         JFrame f = new JFrame("Flappy Bird By Eden");
         GameManager gamePanel = new GameManager();
         f.add(gamePanel);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(gamePanel.width,gamePanel.height);
-        //f.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //f.setUndecorated(true);
         f.setResizable(false);
         f.setVisible(true);	
         f.setFocusable(false);
-        //gamePanel.hideMouseCursor();
     }
 }
 
