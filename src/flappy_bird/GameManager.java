@@ -75,12 +75,31 @@ public class GameManager extends JPanel
         }
     }
     
+    public void collision()
+    {
+        Pipe currentPipe;
+        for (int i = 0; i < pipes.size(); i++)
+        {
+            currentPipe = pipes.get(i);
+            if (bird.x < currentPipe.topPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.topPipeX && bird.y < currentPipe.topPipeY + currentPipe.imageHeight && bird.height + bird.y > currentPipe.topPipeY) 
+            {
+                System.out.println("top");
+            } 
+            
+            if (bird.x < currentPipe.botPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.botPipeX && bird.y < currentPipe.botPipeY + currentPipe.imageHeight && bird.height + bird.y > currentPipe.botPipeY) 
+            {
+                System.out.println("bot");
+            }
+        }
+    }
+    
     public void paintComponent(Graphics g)	
     {
 	super.paintComponent(g);
 	g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),null);
         bird.drawBird(g);
         
+        collision();
         long time = System.currentTimeMillis();
         if (time > lastPipe + cooldownTime && started)
         {

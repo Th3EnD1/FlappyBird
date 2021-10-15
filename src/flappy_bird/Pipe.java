@@ -19,7 +19,7 @@ public class Pipe extends Thread
     Random rand = new Random();
     int x = GameManager.width + 50;
     int bottomHeight;
-    int imageWidth = 300, imageHeight = 500;//dimesions of images
+    public int imageWidth, imageHeight;//dimesions of images
     int space = 200;
     int spaceFromTopWall = 50;
     int spaceFromBottomWall = 100;
@@ -27,26 +27,38 @@ public class Pipe extends Thread
     boolean createdAnother;
     Image topImage;
     Image bottomImage;
-    Rectangle topRec;
-    Rectangle bottomRec;
+    //Rectangle topRec;
+    //Rectangle bottomRec;
+    
+    public int topPipeX, topPipeY;
+    public int botPipeX, botPipeY;
+    
+    public int topMidX, topMidY;
+    public int botMidX, botMidY;
+    
+    
     
     public Pipe(GameManager gamePanel)
     {
+        updatePipeProperties();
+        
         this.gamePanel = gamePanel;
         isAlive = true;
         createdAnother = false;
         topImage = (new ImageIcon("topPipe.png")).getImage();
         bottomImage = (new ImageIcon("bottomPipe.png")).getImage();
+        imageWidth = topImage.getWidth(null);
+        imageHeight = topImage.getHeight(null);
         bottomHeight = (new Random()).nextInt(GameManager.height - space - spaceFromTopWall - spaceFromBottomWall ) + space + spaceFromTopWall;
-        topRec = new Rectangle(x, bottomHeight - space - imageHeight, imageWidth, imageHeight);
-        bottomRec = new Rectangle(x, bottomHeight, imageWidth, imageHeight);
+        //topRec = new Rectangle(x, bottomHeight - space - imageHeight, imageWidth, imageHeight);
+        //bottomRec = new Rectangle(x, bottomHeight, imageWidth, imageHeight);
         start();
     }
     
     public void drawPipe(Graphics g)
     {
-        g.drawImage(topImage, x, bottomHeight - space - imageHeight, imageWidth, imageHeight, null);
-        g.drawImage(bottomImage, x, bottomHeight, imageWidth, imageHeight, null);
+        g.drawImage(topImage, topPipeX, topPipeY, imageWidth, imageHeight, null);
+        g.drawImage(bottomImage, botPipeX, botPipeY, imageWidth, imageHeight, null);
     }
     
     public void run()
@@ -60,8 +72,9 @@ public class Pipe extends Thread
             catch (InterruptedException e) {}
             
             x -= 10;
-            topRec.x -= 10;
-            bottomRec.x -= 10;
+            updatePipeProperties();
+            //topRec.x -= 10;
+            //bottomRec.x -= 10;
             
             if(x < -200)
             {
@@ -70,5 +83,18 @@ public class Pipe extends Thread
             
             gamePanel.repaint();
         }
+    }
+    
+    public void updatePipeProperties()
+    {
+        topPipeX = x;
+        topPipeY = bottomHeight - space - imageHeight;
+        botPipeX = x;
+        botPipeY = bottomHeight;
+        
+        topMidX = (topPipeX + imageWidth) / 2;
+        topMidY = (topPipeY + imageHeight) / 2;
+        botMidX = (botPipeX + imageWidth) / 2;
+        botMidY = (botPipeY + imageHeight) / 2;
     }
 }

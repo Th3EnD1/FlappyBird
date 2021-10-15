@@ -16,23 +16,29 @@ public class Bird extends Thread
     GameManager gamePanel;
     int x = GameManager.width / 2 - 10, y = GameManager.height / 2 - 10;
     int size = 35;
+    int width = size + 15;
+    int height = size;
     Image birdImage;
     int yMotion;
     int ticks;
-    Rectangle birdRec;
+    //Rectangle birdRec;
+    
+    public int midX, midY;
     
     public Bird(GameManager gamePanel)
     {
+        midX = (x + width) / 2;
+        midY = (y + height) / 2;
         this.gamePanel = gamePanel;
         ImageIcon img = new ImageIcon("birdImage.png");
         birdImage = img.getImage();
-        birdRec = new Rectangle(x, y, size + 15, size);
+        //birdRec = new Rectangle(x, y, size + 15, size);
         start();
     }
     
     public void drawBird(Graphics g)
     {
-        g.drawImage(birdImage, x, y, size + 15, size, null);
+        g.drawImage(birdImage, x, y, width, height, null);
     }
     
     public void run()
@@ -54,12 +60,12 @@ public class Bird extends Thread
                     yMotion += 2;
                 }
                 y += yMotion;
-                birdRec.y += yMotion;
+                //birdRec.y += yMotion;
 
                 if(y + yMotion >= GameManager.height - 125)
                 {
                     y = GameManager.height - 115;
-                    birdRec.y = GameManager.height - 115;
+                    //birdRec.y = GameManager.height - 115;
                 }
             }
             gamePanel.repaint();
