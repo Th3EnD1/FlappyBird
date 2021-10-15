@@ -18,61 +18,52 @@ import javax.swing.*;
 public class GameManager extends JPanel
 {
     public static GameManager game;
+    
     Bird bird;
-    Pipe pipe;
     public ArrayList<Pipe> pipes;
+    
     Image backgroundImage;
     static int width;
     static int height;
-    boolean started, gameOver;
+    
+    boolean gameActive, started;
     int score;
     long lastPipe;
     long cooldownTime;
     
     public GameManager()
     {
+        game = this;
         width = 1200;
         height = 700;
         lastPipe = 0;
         cooldownTime = 1500;// 2000 milliseconds
         backgroundImage = (new ImageIcon("background.jpg")).getImage();
         bird = new Bird(this);
-        pipe = new Pipe(this);
         pipes = new ArrayList<Pipe>();
+        gameActive = false;
+        started = false;
         
         addMouseListener(new MouseAdapter() 
         { 
             public void mousePressed(MouseEvent me) 
             { 
-                jump();
+                if (gameActive) 
+                {
+                    bird.resetMotion();
+                    bird.yMotion -= 14;
+                }
+                else
+                {
+                    bird = new Bird(game);
+                    pipes.clear();
+                    bird.yMotion = 0;
+                    score = 0;
+                    gameActive = true;
+                    started = true;
+                }
             }
         });
-    }
-    
-    public void jump()
-    {
-        if(gameOver)
-        {
-            bird = new Bird(this);
-            pipes.clear();
-            bird.yMotion = 0;
-            score = 0;
-            gameOver = false;
-        }
-        
-        if(!started)
-        {
-            started = true;
-        }
-        else if (!gameOver)
-        {
-            if(bird.yMotion > 0)
-            {
-                bird.yMotion = 0;
-            }
-            
-            bird.yMotion -= 14;
-        }
     }
     
     public void collision()
@@ -81,14 +72,37 @@ public class GameManager extends JPanel
         for (int i = 0; i < pipes.size(); i++)
         {
             currentPipe = pipes.get(i);
+            //collision with the top part of the pipe
             if (bird.x < currentPipe.topPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.topPipeX && bird.y < currentPipe.topPipeY + currentPipe.imageHeight && bird.height + bird.y > currentPipe.topPipeY) 
             {
+                gameActive = false;
                 System.out.println("top");
             } 
             
+            //collision with the bottom part of the pipe
             if (bird.x < currentPipe.botPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.botPipeX && bird.y < currentPipe.botPipeY + currentPipe.imageHeight && bird.height + bird.y > currentPipe.botPipeY) 
             {
+                gameActive = false;
                 System.out.println("bot");
+            }
+        }
+        
+        if (bird.y >= height - 115 || bird.y <= 0) 
+        {
+            gameActive = false;
+        }
+    }
+    
+    public void addScore()
+    {
+        for (int i = 0; i < pipes.size(); i++) 
+        {
+            Pipe temp = pipes.get(i);
+            if (!temp.scored && temp.x + temp.imageWidth <= bird.x) 
+            {
+                temp.scored = true;
+                score++;
+                System.out.println(score);
             }
         }
     }
@@ -96,32 +110,66 @@ public class GameManager extends JPanel
     public void paintComponent(Graphics g)	
     {
 	super.paintComponent(g);
-	g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),null);
-        bird.drawBird(g);
+        g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),null);
+        g.setColor(Color.white);
         
-        collision();
-        long time = System.currentTimeMillis();
-        if (time > lastPipe + cooldownTime && started)
+        if (gameActive) 
         {
-            pipes.add(new Pipe(this));
-            lastPipe = time;
+            collision();
+            addScore();
+            bird.drawBird(g);
+        
+            //Spawns pipes on cooldown
+            long time = System.currentTimeMillis();
+            if (time > lastPipe + cooldownTime && gameActive)
+            {
+                pipes.add(new Pipe(this));
+                lastPipe = time;
+            }
+        
+            //Draws the pipes
+            for (int i = 0; i < pipes.size(); i++) 
+            {
+                Pipe temp = pipes.get(i);
+                if (temp.isAlive)
+                {
+                    temp.drawPipe(g);
+                }
+                else
+                {
+                    pipes.remove(temp);
+                }
+            }
         }
-        
-        for (int i = 0; i < pipes.size(); i++) 
+        else if(started)
         {
-            Pipe temp = pipes.get(i);
+            bird.drawBird(g);
             
-            if (temp.isAlive)
+            for (int i = 0; i < pipes.size(); i++) 
             {
-                temp.drawPipe(g);
-                //addPipe(started);
+                Pipe temp = pipes.get(i);
+                if (temp.isAlive)
+                {
+                    temp.drawPipe(g);
+                    temp.frozen = true;
+                }
+                else
+                {
+                    pipes.remove(temp);
+                }
             }
-            else
-            {
-                pipes.remove(temp);
-                System.out.println("pipes deleted");
-            }
+            g.setFont(new Font("Arial", 1, 150));
+            g.drawString("Game Over!", 190, 375);
+            g.setFont(new Font("Arial", 1, 40));
+            g.drawString("Click To Start Again", 450, 450);
         }
+        else 
+        {
+            g.setFont(new Font("Arial", 1, 150));
+            g.drawString("Click To Start!", 110, 375);
+        }
+        g.setFont(new Font("Arial", 1, 75));
+        g.drawString("" + score, 580, 100);
     }
     
     public static void main(String[] args)

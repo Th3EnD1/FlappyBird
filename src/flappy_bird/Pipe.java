@@ -23,12 +23,13 @@ public class Pipe extends Thread
     int space = 200;
     int spaceFromTopWall = 50;
     int spaceFromBottomWall = 100;
+    
     boolean isAlive;
-    boolean createdAnother;
+    boolean frozen;
+    boolean scored;
+    
     Image topImage;
     Image bottomImage;
-    //Rectangle topRec;
-    //Rectangle bottomRec;
     
     public int topPipeX, topPipeY;
     public int botPipeX, botPipeY;
@@ -44,7 +45,8 @@ public class Pipe extends Thread
         
         this.gamePanel = gamePanel;
         isAlive = true;
-        createdAnother = false;
+        frozen = false;
+        scored = false;
         topImage = (new ImageIcon("topPipe.png")).getImage();
         bottomImage = (new ImageIcon("bottomPipe.png")).getImage();
         imageWidth = topImage.getWidth(null);
@@ -71,10 +73,11 @@ public class Pipe extends Thread
             }
             catch (InterruptedException e) {}
             
-            x -= 10;
-            updatePipeProperties();
-            //topRec.x -= 10;
-            //bottomRec.x -= 10;
+            if (!frozen) 
+            {
+                x -= 10;
+                updatePipeProperties();
+            }
             
             if(x < -200)
             {

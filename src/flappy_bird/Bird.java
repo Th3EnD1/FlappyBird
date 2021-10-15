@@ -41,6 +41,14 @@ public class Bird extends Thread
         g.drawImage(birdImage, x, y, width, height, null);
     }
     
+    public void resetMotion()
+    {
+        if(yMotion > 0)
+        {
+            yMotion = 0;
+        }
+    }
+    
     public void run()
     {
         while(true)
@@ -53,7 +61,7 @@ public class Bird extends Thread
             
             ticks++;
             
-            if(gamePanel.started)
+            if(gamePanel.gameActive)
             {
                 if(ticks % 2 == 0 && yMotion < 10)
                 {
@@ -62,6 +70,20 @@ public class Bird extends Thread
                 y += yMotion;
                 //birdRec.y += yMotion;
 
+                if(y + yMotion >= GameManager.height - 125)
+                {
+                    y = GameManager.height - 115;
+                    //birdRec.y = GameManager.height - 115;
+                }
+            }
+            else
+            {
+                if(ticks % 2 == 0 && yMotion < 10)
+                {
+                    yMotion += 2;
+                }
+                y += yMotion;
+                
                 if(y + yMotion >= GameManager.height - 125)
                 {
                     y = GameManager.height - 115;
