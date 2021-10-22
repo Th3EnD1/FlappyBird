@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.*;
 
 /**
@@ -21,15 +22,21 @@ public class GameManager extends JPanel
     
     Bird bird;
     public ArrayList<Pipe> pipes;
+    public ArrayList<Coin> coins;
     
     Image backgroundImage;
     static int width;
     static int height;
     
+    static Image coinImage = ((new ImageIcon("coin.gif")).getImage()).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
+    
     boolean gameActive, started;
     int score;
     long lastPipe;
     long cooldownTime;
+    
+    Pipe tempPipe;
+    Coin tempCoin;
     
     public GameManager()
     {
@@ -37,10 +44,11 @@ public class GameManager extends JPanel
         width = 1200;
         height = 700;
         lastPipe = 0;
-        cooldownTime = 1500;// 2000 milliseconds
+        cooldownTime = 2500;// 2.5 seconds
         backgroundImage = (new ImageIcon("background.jpg")).getImage();
         bird = new Bird(this);
         pipes = new ArrayList<Pipe>();
+        coins = new ArrayList<Coin>();
         gameActive = false;
         started = false;
         
@@ -57,6 +65,7 @@ public class GameManager extends JPanel
                 {
                     bird = new Bird(game);
                     pipes.clear();
+                    coins.clear();
                     bird.yMotion = 0;
                     score = 0;
                     gameActive = true;
@@ -107,6 +116,24 @@ public class GameManager extends JPanel
         }
     }
     
+    public void randomizeCoins()
+    {
+        long pipeSpawnTime = System.currentTimeMillis();
+        Coin c;
+        Random rnd = new Random();
+        int numOfCoins = rnd.nextInt(7);
+        if (numOfCoins != 0)
+        {
+            int interval = (int)(cooldownTime / numOfCoins);
+            numOfCoins--;
+            for (int i = 0; i < numOfCoins; i++)
+            {
+                c = new Coin(this, rnd.nextInt(400) + 150, interval * (i + 1));
+                coins.add(c);
+            }   
+        }
+    }
+    
     public void paintComponent(Graphics g)	
     {
 	super.paintComponent(g);
@@ -116,6 +143,7 @@ public class GameManager extends JPanel
         if (gameActive) 
         {
             collision();
+            coinsCollision();
             addScore();
             bird.drawBird(g);
         
@@ -125,19 +153,33 @@ public class GameManager extends JPanel
             {
                 pipes.add(new Pipe(this));
                 lastPipe = time;
+                randomizeCoins();
             }
-        
+            
             //Draws the pipes
             for (int i = 0; i < pipes.size(); i++) 
             {
-                Pipe temp = pipes.get(i);
-                if (temp.isAlive)
+                tempPipe = pipes.get(i);
+                if (tempPipe.isAlive)
                 {
-                    temp.drawPipe(g);
+                    tempPipe.drawPipe(g);
                 }
                 else
                 {
-                    pipes.remove(temp);
+                    pipes.remove(tempPipe);
+                }
+            }
+            
+            for (int i = 0; i < coins.size(); i++)
+            {
+                tempCoin = coins.get(i);
+                if (tempCoin.isAlive)
+                {
+                    tempCoin.drawCoin(g);
+                }
+                else
+                {
+                    coins.remove(tempCoin);
                 }
             }
         }
@@ -168,8 +210,40 @@ public class GameManager extends JPanel
             g.setFont(new Font("Arial", 1, 150));
             g.drawString("Click To Start!", 110, 375);
         }
+        g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", 1, 75));
         g.drawString("" + score, 580, 100);
+    }
+    
+    public void coinsCollision()
+    {
+        for (int i = 0; i < coins.size(); i++)
+        {
+            if (singleCoinColl(coins.get(i))) 
+            {
+                score++;
+                coins.remove(i);
+            }
+        }
+    }
+    
+    public boolean singleCoinColl(Coin c)
+    {
+        Point circleDistance = new Point();
+            
+        circleDistance.x = Math.abs(c.x - bird.x);
+        circleDistance.y = Math.abs(c.y - bird.y);
+
+        if (circleDistance.x > (bird.width/2 + c.r)){ return false; }
+        if (circleDistance.y > (bird.height/2 + c.r)) { return false; }
+
+        if (circleDistance.x <= (bird.width/2)) { return true; } 
+        if (circleDistance.y <= (bird.height/2)) { return true; }
+
+        int cornerDistance_sq = (circleDistance.x - bird.width/2)^2 +
+                             (circleDistance.y - bird.height/2)^2;
+
+        return (cornerDistance_sq <= (c.r^2));
     }
     
     public static void main(String[] args)
