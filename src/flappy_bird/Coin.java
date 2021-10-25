@@ -38,7 +38,7 @@ public class Coin extends Thread
             Thread.sleep(spawnTime);
         }
         catch (InterruptedException e) {}
-        while(true)
+        while(isAlive)
         {
             try
             {

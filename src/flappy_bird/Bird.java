@@ -15,9 +15,8 @@ public class Bird extends Thread
 {
     GameManager gamePanel;
     int x = GameManager.width / 2 - 10, y = GameManager.height / 2 - 10;
-    int size = 35;
-    int width = size + 15;
-    int height = size;
+    int width = 50;
+    int height = 50;
     Image birdImage;
     int yMotion;
     int ticks;
@@ -30,8 +29,9 @@ public class Bird extends Thread
         midX = (x + width) / 2;
         midY = (y + height) / 2;
         this.gamePanel = gamePanel;
-        ImageIcon img = new ImageIcon("birdImage.png");
+        ImageIcon img = new ImageIcon("laBird.png");
         birdImage = img.getImage();
+        birdImage = birdImage.getScaledInstance(50, 35, Image.SCALE_DEFAULT);
         //birdRec = new Rectangle(x, y, size + 15, size);
         start();
     }

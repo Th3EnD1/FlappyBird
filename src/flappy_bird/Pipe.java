@@ -65,7 +65,7 @@ public class Pipe extends Thread
     
     public void run()
     {
-        while(true)
+        while(isAlive)
         {
             try
             {

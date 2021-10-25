@@ -23,6 +23,7 @@ public class GameManager extends JPanel
     Bird bird;
     public ArrayList<Pipe> pipes;
     public ArrayList<Coin> coins;
+    public ArrayList<Missile> missiles;
     
     Image backgroundImage;
     static int width;
@@ -34,9 +35,11 @@ public class GameManager extends JPanel
     int score;
     long lastPipe;
     long cooldownTime;
+    boolean pipesDisabled;
     
     Pipe tempPipe;
     Coin tempCoin;
+    Missile tempMissile;
     
     public GameManager()
     {
@@ -49,6 +52,7 @@ public class GameManager extends JPanel
         bird = new Bird(this);
         pipes = new ArrayList<Pipe>();
         coins = new ArrayList<Coin>();
+        missiles = new ArrayList<Missile>();
         gameActive = false;
         started = false;
         
@@ -66,6 +70,7 @@ public class GameManager extends JPanel
                     bird = new Bird(game);
                     pipes.clear();
                     coins.clear();
+                    missiles.clear();
                     bird.yMotion = 0;
                     score = 0;
                     gameActive = true;
@@ -78,6 +83,8 @@ public class GameManager extends JPanel
     public void collision()
     {
         Pipe currentPipe;
+        Missile currentMissile;
+        
         for (int i = 0; i < pipes.size(); i++)
         {
             currentPipe = pipes.get(i);
@@ -85,14 +92,22 @@ public class GameManager extends JPanel
             if (bird.x < currentPipe.topPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.topPipeX && bird.y < currentPipe.topPipeY + currentPipe.imageHeight && bird.height + bird.y > currentPipe.topPipeY) 
             {
                 gameActive = false;
-                System.out.println("top");
             } 
             
             //collision with the bottom part of the pipe
             if (bird.x < currentPipe.botPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.botPipeX && bird.y < currentPipe.botPipeY + currentPipe.imageHeight && bird.height + bird.y > currentPipe.botPipeY) 
             {
                 gameActive = false;
-                System.out.println("bot");
+            }
+        }
+        
+        for (int i = 0; i < missiles.size(); i++)
+        {
+            currentMissile = missiles.get(i);
+            //collision with the missile
+            if (bird.x < currentMissile.x + currentMissile.imageWidth && bird.x + bird.width > currentMissile.x && bird.y < currentMissile.y + currentMissile.imageHeight && bird.height + bird.y > currentMissile.y)
+            {
+                gameActive = false;
             }
         }
         
@@ -170,6 +185,7 @@ public class GameManager extends JPanel
                 }
             }
             
+            //Draws the coins
             for (int i = 0; i < coins.size(); i++)
             {
                 tempCoin = coins.get(i);
@@ -180,6 +196,20 @@ public class GameManager extends JPanel
                 else
                 {
                     coins.remove(tempCoin);
+                }
+            }
+            
+            //Draws the missiles
+            for (int i = 0; i < missiles.size(); i++)
+            {
+                tempMissile = missiles.get(i);
+                if (tempMissile.isAlive)
+                {
+                    tempMissile.drawMissile(g);
+                }
+                else
+                {
+                    missiles.remove(tempMissile);
                 }
             }
         }
