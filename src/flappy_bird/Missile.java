@@ -16,34 +16,41 @@ public class Missile extends Thread
 {
     GameManager gamePanel;
     
-    int x = GameManager.width + 500;
-    int y = gamePanel.bird.y - ((gamePanel.bird.height) / 2);
+    int x = GameManager.width + 1500;
+    int y = GameManager.height / 2/*gamePanel.bird.y - ((gamePanel.bird.height) / 2)*/;
     int imageWidth, imageHeight;
+    long Spawntime, currTime;
     
     boolean isAlive;
     Image warningImage;
     Image missileImage;
     
-    public Missile()
+    public Missile(GameManager gamePanel)
     {
+        isAlive = true;
+        Spawntime = System.currentTimeMillis();
+        currTime = 0;
+        this.gamePanel = gamePanel;
         warningImage = (new ImageIcon("warningImage.png")).getImage();
-        missileImage = (new ImageIcon("missileImage.png")).getImage();
-        imageWidth = warningImage.getWidth(null);
-        imageHeight = warningImage.getHeight(null);
+        ImageIcon img = new ImageIcon("missileImage.png");
+        missileImage = img.getImage();
+        imageWidth = 80;
+        imageHeight = 80;
+        missileImage = missileImage.getScaledInstance(56, 50, Image.SCALE_DEFAULT);
         start();
     }
     
-    public void missileWarning(Graphics g)
+    public void drawWarning(Graphics g)
     {
         if(isAlive && x >= GameManager.width)
         {
-            g.drawImage(warningImage, GameManager.width - imageWidth - 5, y, imageWidth, imageHeight, null);
+            g.drawImage(warningImage, GameManager.width - imageWidth - 5, y, 80, 80, null);
         }
     }
     
     public void drawMissile(Graphics g)
     {
-        g.drawImage(missileImage, x, y, imageWidth, imageHeight, null);
+        g.drawImage(missileImage, x, y, 70, 60, null);
     }
     
     public void run()
@@ -57,17 +64,25 @@ public class Missile extends Thread
             }
             catch(InterruptedException e) {}
             
-            missileWarning(g);
+            //drawWarning(g);
+//            currTime = System.currentTimeMillis();
+//            if(isAlive && x >= GameManager.width && (currTime - Spawntime <= 3000))
+//            {
+//                g.drawImage(warningImage, GameManager.width - imageWidth - 5, y, imageWidth, imageHeight, null);
+//            }
             
             x -= 10;
             
-            if (gamePanel.bird.y > y)
+            if(x >= gamePanel.bird.x)
             {
-                y++;
-            }
-            else
-            {
-                y--;
+                if(gamePanel.bird.y > y)
+                {
+                    y = y + 2;
+                }
+                else
+                {
+                    y = y - 2;
+                }
             }
             
             if(x < -200)

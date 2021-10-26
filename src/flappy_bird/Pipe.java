@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author student
+ * @author Eden
  */
 public class Pipe extends Thread
 {

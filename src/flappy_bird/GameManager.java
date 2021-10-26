@@ -14,7 +14,7 @@ import javax.swing.*;
 
 /**
  *
- * @author student
+ * @author Eden
  */
 public class GameManager extends JPanel
 {
@@ -34,8 +34,10 @@ public class GameManager extends JPanel
     boolean gameActive, started;
     int score;
     long lastPipe;
+    long pipeSpawnTime;
     long cooldownTime;
     boolean pipesDisabled;
+    Random rnd;
     
     Pipe tempPipe;
     Coin tempCoin;
@@ -55,6 +57,7 @@ public class GameManager extends JPanel
         missiles = new ArrayList<Missile>();
         gameActive = false;
         started = false;
+        rnd = new Random();
         
         addMouseListener(new MouseAdapter() 
         { 
@@ -126,16 +129,14 @@ public class GameManager extends JPanel
             {
                 temp.scored = true;
                 score++;
-                System.out.println(score);
             }
         }
     }
     
     public void randomizeCoins()
     {
-        long pipeSpawnTime = System.currentTimeMillis();
+        pipeSpawnTime = System.currentTimeMillis();
         Coin c;
-        Random rnd = new Random();
         int numOfCoins = rnd.nextInt(7);
         if (numOfCoins != 0)
         {
@@ -146,6 +147,17 @@ public class GameManager extends JPanel
                 c = new Coin(this, rnd.nextInt(400) + 150, interval * (i + 1));
                 coins.add(c);
             }   
+        }
+    }
+    
+    public void missileSpawner()
+    {
+        Random randomNum = new Random();
+        int rndNum = randomNum.nextInt(3) + 1;
+        if(rndNum == 3 && missiles.size() < 1)
+        {
+            missiles.add(new Missile(this));
+            pipesDisabled = true;
         }
     }
     
@@ -162,13 +174,17 @@ public class GameManager extends JPanel
             addScore();
             bird.drawBird(g);
         
-            //Spawns pipes on cooldown
+            //Spawns pipes or miislise on cooldown
             long time = System.currentTimeMillis();
             if (time > lastPipe + cooldownTime && gameActive)
             {
-                pipes.add(new Pipe(this));
-                lastPipe = time;
-                randomizeCoins();
+                missileSpawner();
+                if(!pipesDisabled)
+                {
+                    pipes.add(new Pipe(this));
+                    lastPipe = time;
+                    randomizeCoins();
+                }
             }
             
             //Draws the pipes
@@ -206,10 +222,12 @@ public class GameManager extends JPanel
                 if (tempMissile.isAlive)
                 {
                     tempMissile.drawMissile(g);
+                    tempMissile.drawWarning(g);
                 }
                 else
                 {
                     missiles.remove(tempMissile);
+                    pipesDisabled = false;
                 }
             }
         }

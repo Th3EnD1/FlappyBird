@@ -9,7 +9,7 @@ import java.awt.*;
 import javax.swing.*;
 /**
  *
- * @author student
+ * @author Eden
  */
 public class Bird extends Thread
 {

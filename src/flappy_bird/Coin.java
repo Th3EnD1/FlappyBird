@@ -10,7 +10,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author student
+ * @author Eden
  */
 public class Coin extends Thread
 {
