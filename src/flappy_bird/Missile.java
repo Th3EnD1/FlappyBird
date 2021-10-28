@@ -16,14 +16,16 @@ public class Missile extends Thread
 {
     GameManager gamePanel;
     
-    int x = GameManager.width + 1500;
+    int x = GameManager.width + 2000;
     int y = GameManager.height / 2/*gamePanel.bird.y - ((gamePanel.bird.height) / 2)*/;
     int imageWidth, imageHeight;
     long Spawntime, currTime;
     
     boolean isAlive;
     Image warningImage;
+    Image closeWarningImage;
     Image missileImage;
+    Image fireImage;
     
     public Missile(GameManager gamePanel)
     {
@@ -33,6 +35,8 @@ public class Missile extends Thread
         this.gamePanel = gamePanel;
         warningImage = (new ImageIcon("warningImage.png")).getImage();
         ImageIcon img = new ImageIcon("missileImage.png");
+        closeWarningImage = new ImageIcon("closeWarningImage.png").getImage();
+        fireImage = new ImageIcon("fire.gif").getImage();
         missileImage = img.getImage();
         imageWidth = 80;
         imageHeight = 80;
@@ -44,13 +48,21 @@ public class Missile extends Thread
     {
         if(isAlive && x >= GameManager.width)
         {
-            g.drawImage(warningImage, GameManager.width - imageWidth - 5, y, 80, 80, null);
+            if(x >= GameManager.width + 500)
+            {
+                g.drawImage(warningImage, GameManager.width - imageWidth - 5, y, 80, 80, null);
+            }
+            else
+            {
+                g.drawImage(closeWarningImage, GameManager.width - imageWidth - 5, y, 80, 80, null);
+            }
         }
     }
     
     public void drawMissile(Graphics g)
     {
         g.drawImage(missileImage, x, y, 70, 60, null);
+        g.drawImage(fireImage, x + 35, y - 43, fireImage.getWidth(null), fireImage.getHeight(null), null);
     }
     
     public void run()
@@ -60,7 +72,7 @@ public class Missile extends Thread
         {
             try
             {
-                Thread.sleep(20);
+                Thread.sleep(10);
             }
             catch(InterruptedException e) {}
             
@@ -73,7 +85,7 @@ public class Missile extends Thread
             
             x -= 10;
             
-            if(x >= gamePanel.bird.x)
+            if(x >= GameManager.width)
             {
                 if(gamePanel.bird.y > y)
                 {
