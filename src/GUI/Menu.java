@@ -4,10 +4,13 @@
  */
 package GUI;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author Eden
  */
-public class Menu {
+public class Menu extends JPanel
+{
     
 }
