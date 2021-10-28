@@ -54,7 +54,7 @@ public class Missile extends Thread
             }
             else
             {
-                g.drawImage(closeWarningImage, GameManager.width - imageWidth - 5, y, 80, 80, null);
+                g.drawImage(closeWarningImage, GameManager.width - imageWidth - 15, y, 80, 80, null);
             }
         }
     }

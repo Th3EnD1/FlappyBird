@@ -32,7 +32,6 @@ public class Bird extends Thread
         ImageIcon img = new ImageIcon("laBird.png");
         birdImage = img.getImage();
         birdImage = birdImage.getScaledInstance(50, 35, Image.SCALE_DEFAULT);
-        //birdRec = new Rectangle(x, y, size + 15, size);
         start();
     }
     
