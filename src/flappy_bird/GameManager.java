@@ -153,8 +153,8 @@ public class GameManager extends JPanel
     public void missileSpawner()
     {
         Random randomNum = new Random();
-        int rndNum = randomNum.nextInt(3) + 1;
-        if(rndNum == 3 && missiles.size() < 1)
+        int rndNum = randomNum.nextInt(4) + 1;
+        if(rndNum == 4 && missiles.size() < 1)
         {
             missiles.add(new Missile(this));
             pipesDisabled = true;
@@ -294,17 +294,17 @@ public class GameManager extends JPanel
         return (cornerDistance_sq <= (c.r^2));
     }
     
-//    public static void main(String[] args)
-//    {
-//        JFrame f = new JFrame("Flappy Bird By Eden");
-//        GameManager gamePanel = new GameManager();
-//        f.add(gamePanel);
-//        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        f.setSize(gamePanel.width,gamePanel.height);
-//        f.setResizable(false);
-//        f.setVisible(true);	
-//        f.setFocusable(false);
-//    }
+    public static void main(String[] args)
+    {
+        JFrame f = new JFrame("Flappy Bird By Eden");
+        GameManager gamePanel = new GameManager();
+        f.add(gamePanel);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setSize(gamePanel.width,gamePanel.height);
+        f.setResizable(false);
+        f.setVisible(true);	
+        f.setFocusable(false);
+    }
 }
 
 

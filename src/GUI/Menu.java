@@ -51,10 +51,7 @@ public class Menu extends JPanel implements ActionListener
         //btnJoin.setIcon(new ImageIcon(startImage));
         btnJoin.setBounds((width / 2) - 300, 250, btn_Width, btn_Height);
         add(btnJoin);
-        btnJoin.addActionListener((ActionEvent e) ->
-        {
-            //mainFrame.switchPanel(1);
-        });
+        btnJoin.setActionCommand("Join");
         
         btnCancel = new JButton("Cancel Search");
         //btnCancel.setBorderPainted(false); 
@@ -63,10 +60,7 @@ public class Menu extends JPanel implements ActionListener
         //btnJoin.setIcon(new ImageIcon(startImage));
         btnCancel.setBounds((width / 2) - 300, 300, btn_Width, btn_Height);
         add(btnCancel);
-        btnCancel.addActionListener((ActionEvent e) ->
-        {
-            //mainFrame.switchPanel(1);
-        });
+        btnCancel.setActionCommand("Cancel");
         
         btnStartSingle = new JButton("Start Game");
         //btnCancel.setBorderPainted(false); 
@@ -75,10 +69,7 @@ public class Menu extends JPanel implements ActionListener
         //btnJoin.setIcon(new ImageIcon(startImage));
         btnStartSingle.setBounds((width / 2) + 100, 275, btn_Width, btn_Height);
         add(btnStartSingle);
-        btnStartSingle.addActionListener((ActionEvent e) ->
-        {
-            //mainFrame.switchPanel(1);
-        });
+        btnStartSingle.setActionCommand("Start");
         
         frame.setVisible(true);
         frame.pack();
@@ -96,6 +87,22 @@ public class Menu extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        switch (e.getActionCommand())
+        {
+            case "Join":
+            {
+                
+            }break;
+            
+            case "Cancel":
+            {
+                
+            }break;
+            
+            case "Start":
+            {
+                
+            }break;
+        }
     }
 }
