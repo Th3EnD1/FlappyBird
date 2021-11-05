@@ -8,6 +8,7 @@ package server;
  *
  * @author student
  */
-public class ServerGameManager {
+public class ServerGameManager extends Thread
+{
     
 }
