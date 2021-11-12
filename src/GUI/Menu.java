@@ -26,23 +26,24 @@ public class Menu extends JPanel implements ActionListener
     public static int width = (int)(menuImage.getWidth(null) * mult);
     public static int height = (int)(menuImage.getHeight(null) * mult);
     public static int btn_Width = 150, btn_Height = 30;
-    public JFrame frame;
+    public GameFrame frame;
     private JButton btnStartSingle, btnJoin, btnCancel;
     
-    public Menu()
+    public Menu(GameFrame f)
     {
         initGUI();
+        this.frame = f;
     }
     
     public void initGUI()
     {
         setLayout(null);
-        this.setPreferredSize(new Dimension(width, height));
-        frame = new JFrame("Sloppy Bird by Eden");
-        frame.add(this);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocation(200, 200);
+//        this.setPreferredSize(new Dimension(width, height));
+//        frame = new JFrame("Sloppy Bird by Eden");
+//        frame.add(this);
+//        frame.setResizable(false);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setLocation(200, 200);
         
         btnJoin = new JButton("Join queue");
         //btnJoin.setBorderPainted(false); 
@@ -70,9 +71,18 @@ public class Menu extends JPanel implements ActionListener
         btnStartSingle.setBounds((width / 2) + 100, 275, btn_Width, btn_Height);
         add(btnStartSingle);
         btnStartSingle.setActionCommand("Start");
+        btnStartSingle.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("Started1");
+                frame.updateFrame(1);
+            }
+        });
         
-        frame.setVisible(true);
-        frame.pack();
+        //frame.setVisible(true);
+        //frame.pack();
     }
     
     public void paintComponent(Graphics g)
@@ -101,7 +111,8 @@ public class Menu extends JPanel implements ActionListener
             
             case "Start":
             {
-                
+                System.out.println("Started");
+                this.frame.updateFrame(1);
             }break;
         }
     }

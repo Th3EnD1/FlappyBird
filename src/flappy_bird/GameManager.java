@@ -26,8 +26,8 @@ public class GameManager extends JPanel
     public ArrayList<Missile> missiles;
     
     Image backgroundImage;
-    static int width;
-    static int height;
+    public static int width;
+    public static int height;
     
     static Image coinImage = ((new ImageIcon("coin.gif")).getImage()).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
     
@@ -294,17 +294,17 @@ public class GameManager extends JPanel
         return (cornerDistance_sq <= (c.r^2));
     }
     
-    public static void main(String[] args)
-    {
-        JFrame f = new JFrame("Flappy Bird By Eden");
-        GameManager gamePanel = new GameManager();
-        f.add(gamePanel);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(gamePanel.width,gamePanel.height);
-        f.setResizable(false);
-        f.setVisible(true);	
-        f.setFocusable(false);
-    }
+//    public static void main(String[] args)
+//    {
+//        JFrame f = new JFrame("Flappy Bird By Eden");
+//        GameManager gamePanel = new GameManager();
+//        f.add(gamePanel);
+//        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        f.setSize(gamePanel.width,gamePanel.height);
+//        f.setResizable(false);
+//        f.setVisible(true);	
+//        f.setFocusable(false);
+//    }
 }
 
 

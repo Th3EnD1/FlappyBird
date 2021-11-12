@@ -16,6 +16,7 @@ public class Main
     public static void main(String[] args)
     {
         //Menu menu = new Menu();
-        ClientGamePanel run = new ClientGamePanel();
+        //ClientGamePanel run = new ClientGamePanel();
+        GameFrame game = new GameFrame();
     }
 }

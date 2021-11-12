@@ -4,11 +4,52 @@
  */
 package GUI;
 
-/**
- *
- * @author student
- */
-public class GameFrame
+import flappy_bird.GameManager;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import flappy_bird.GameManager;
+import java.awt.Dimension;
+
+public class GameFrame extends JFrame
 {
+    public JFrame f;
+    JPanel panel;
     
+    int frameNumber;
+    
+    public GameFrame()
+    {
+        this.setTitle("Flappy Bird By Eden");
+        panel = new Menu(this);
+        this.add(panel);
+        //this.setPreferredSize(new Dimension(Menu.width, Menu.height));
+        this.setSize(Menu.width, Menu.height);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLocation(200, 200);
+        this.setVisible(true);	
+        this.setFocusable(false);
+    }
+    
+    public void updateFrame(int frameNumber)
+    {
+        this.frameNumber = frameNumber;
+        
+        switch(frameNumber)
+        {
+            case 1:
+            {
+                this.getContentPane().removeAll();
+                panel = new GameManager();
+                
+                this.add(panel);
+                this.setSize(GameManager.width,GameManager.height);
+                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                this.setResizable(false);
+                this.setLocation(200, 200);
+                this.setVisible(true);	
+                this.setFocusable(false);
+            }break;
+        }
+    }
 }
