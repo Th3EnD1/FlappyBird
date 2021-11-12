@@ -4,7 +4,6 @@
  */
 package GUI;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -12,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -38,36 +36,35 @@ public class Menu extends JPanel implements ActionListener
     public void initGUI()
     {
         setLayout(null);
-//        this.setPreferredSize(new Dimension(width, height));
-//        frame = new JFrame("Sloppy Bird by Eden");
-//        frame.add(this);
-//        frame.setResizable(false);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setLocation(200, 200);
         
         btnJoin = new JButton("Join queue");
-        //btnJoin.setBorderPainted(false); 
-        //btnJoin.setContentAreaFilled(false); 
-        //startImage = startImage.getScaledInstance(300, 100, Image.SCALE_DEFAULT);
-        //btnJoin.setIcon(new ImageIcon(startImage));
         btnJoin.setBounds((width / 2) - 300, 250, btn_Width, btn_Height);
         add(btnJoin);
         btnJoin.setActionCommand("Join");
+        btnJoin.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("Started multiplayer");
+                frame.updateFrame(2);
+            }
+        });
         
         btnCancel = new JButton("Cancel Search");
-        //btnCancel.setBorderPainted(false); 
-        //btnCancel.setContentAreaFilled(false); 
-        //startImage = startImage.getScaledInstance(300, 100, Image.SCALE_DEFAULT);
-        //btnJoin.setIcon(new ImageIcon(startImage));
         btnCancel.setBounds((width / 2) - 300, 300, btn_Width, btn_Height);
         add(btnCancel);
         btnCancel.setActionCommand("Cancel");
+        btnCancel.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("Canceled multiplayer");
+            }
+        });
         
         btnStartSingle = new JButton("Start Game");
-        //btnCancel.setBorderPainted(false); 
-        //btnCancel.setContentAreaFilled(false); 
-        //startImage = startImage.getScaledInstance(300, 100, Image.SCALE_DEFAULT);
-        //btnJoin.setIcon(new ImageIcon(startImage));
         btnStartSingle.setBounds((width / 2) + 100, 275, btn_Width, btn_Height);
         add(btnStartSingle);
         btnStartSingle.setActionCommand("Start");
@@ -76,13 +73,10 @@ public class Menu extends JPanel implements ActionListener
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("Started1");
+                System.out.println("Started single player");
                 frame.updateFrame(1);
             }
         });
-        
-        //frame.setVisible(true);
-        //frame.pack();
     }
     
     public void paintComponent(Graphics g)
@@ -97,23 +91,24 @@ public class Menu extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        switch (e.getActionCommand())
-        {
-            case "Join":
-            {
-                
-            }break;
-            
-            case "Cancel":
-            {
-                
-            }break;
-            
-            case "Start":
-            {
-                System.out.println("Started");
-                this.frame.updateFrame(1);
-            }break;
-        }
+//        System.out.println("Action");
+//        switch (e.getActionCommand())
+//        {
+//            case "Join":
+//            {
+//                //ClientGamePanel run = new ClientGamePanel();
+//            }break;
+//            
+//            case "Cancel":
+//            {
+//                
+//            }break;
+//            
+//            case "Start":
+//            {
+//                System.out.println("Started");
+//                this.frame.updateFrame(1);
+//            }break;
+//        }
     }
 }

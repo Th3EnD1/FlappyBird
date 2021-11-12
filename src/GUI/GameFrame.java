@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import flappy_bird.GameManager;
 import java.awt.Dimension;
+import client.ClientGamePanel;
 
 public class GameFrame extends JFrame
 {
@@ -50,6 +51,21 @@ public class GameFrame extends JFrame
                 this.setVisible(true);	
                 this.setFocusable(false);
             }break;
+            
+            case 2:
+            {
+                //ClientGamePanel run = new ClientGamePanel();
+                this.getContentPane().removeAll();
+                panel = new ClientGamePanel();
+                
+                this.add(panel);
+                this.setSize(GameManager.width,GameManager.height);
+                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                this.setResizable(false);
+                this.setLocation(200, 200);
+                this.setVisible(true);	
+                this.setFocusable(false);
+            }
         }
     }
 }
