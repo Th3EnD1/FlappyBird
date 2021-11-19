@@ -3,7 +3,7 @@ package server;
 
 public class InitServer extends java.util.Observable
 {
-    public ServerGameManager game;
+    public ServerGameManager game = new ServerGameManager(this);
     
     public static void main(String[] args) 
     {
