@@ -17,7 +17,7 @@ public class Pipe extends Thread
 {
     GameManager gamePanel;
     Random rand = new Random();
-    int x = GameManager.width + 50;
+    public int x = GameManager.width + 50;
     int bottomHeight;
     public int imageWidth, imageHeight;//dimesions of images
     int space = 200;
@@ -26,7 +26,7 @@ public class Pipe extends Thread
     
     boolean isAlive;
     boolean frozen;
-    boolean scored;
+    public boolean scored;
     
     Image topImage;
     Image bottomImage;

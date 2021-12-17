@@ -7,6 +7,8 @@ package flappy_bird;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.swing.JPanel;
+import server.ServerGameManager;
 
 /**
  *

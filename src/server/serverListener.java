@@ -21,7 +21,7 @@ public class ServerListener extends Thread implements java.util.Observer
         this.server = server;
         this.index = index;
         this.socket = socket;
-    } 
+    }
     
     public void run() 
     {
@@ -30,14 +30,14 @@ public class ServerListener extends Thread implements java.util.Observer
             in = new java.io.ObjectInputStream(socket.getInputStream());
             out = new java.io.ObjectOutputStream(socket.getOutputStream());
             
-//            if (index < 2) 
-//            {
-//                out.writeObject(new Integer(1));
-//            }
-//            else
-//            {
-//                out.writeObject(new Integer(2));
-//            }
+            if (index < 2) 
+            {
+                out.writeObject(new Integer(1));
+            }
+            else
+            {
+                out.writeObject(new Integer(2));
+            }
             
             out.flush();
             Object obj;
