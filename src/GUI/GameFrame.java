@@ -14,7 +14,7 @@ import client.ClientGamePanel;
 public class GameFrame extends JFrame
 {
     public JFrame f;
-    JPanel panel;
+    public JPanel panel;
     
     int frameNumber;
     

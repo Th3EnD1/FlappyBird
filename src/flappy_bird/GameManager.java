@@ -77,6 +77,7 @@ public class GameManager extends JPanel
                     bird.yMotion = 0;
                     score = 0;
                     gameActive = true;
+                    bird.isAlive = true;
                     started = true;
                 }
             }
@@ -95,12 +96,14 @@ public class GameManager extends JPanel
             if (bird.x < currentPipe.topPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.topPipeX && bird.y < currentPipe.topPipeY + currentPipe.imageHeight && bird.height + bird.y > currentPipe.topPipeY) 
             {
                 gameActive = false;
+                bird.isAlive = false;
             } 
             
             //collision with the bottom part of the pipe
             if (bird.x < currentPipe.botPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.botPipeX && bird.y < currentPipe.botPipeY + currentPipe.imageHeight && bird.height + bird.y > currentPipe.botPipeY) 
             {
                 gameActive = false;
+                bird.isAlive = false;
             }
         }
         
@@ -111,12 +114,14 @@ public class GameManager extends JPanel
             if (bird.x < currentMissile.x + currentMissile.imageWidth && bird.x + bird.width > currentMissile.x && bird.y < currentMissile.y + currentMissile.imageHeight && bird.height + bird.y > currentMissile.y)
             {
                 gameActive = false;
+                bird.isAlive = false;
             }
         }
         
         if (bird.y >= height - 115 || bird.y <= 0) 
         {
             gameActive = false;
+            bird.isAlive = false;
         }
     }
     

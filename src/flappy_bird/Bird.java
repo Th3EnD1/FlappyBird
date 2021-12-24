@@ -13,21 +13,22 @@ import javax.swing.*;
  */
 public class Bird extends Thread
 {
-    GameManager gamePanel;
+    JPanel gamePanel;
     int x = GameManager.width / 2 - 10, y = GameManager.height / 2 - 10;
     int width = 50;
     int height = 50;
     Image birdImage;
-    int yMotion;
+    public int yMotion;
     int ticks;
-    //Rectangle birdRec;
+    public boolean isAlive;
     
     public int midX, midY;
     
-    public Bird(GameManager gamePanel)
+    public Bird(JPanel gamePanel)
     {
         midX = (x + width) / 2;
         midY = (y + height) / 2;
+        isAlive = false;
         this.gamePanel = gamePanel;
         ImageIcon img = new ImageIcon("laBird.png");
         birdImage = img.getImage();
@@ -38,6 +39,8 @@ public class Bird extends Thread
     public void drawBird(Graphics g)
     {
         g.drawImage(birdImage, x, y, width, height, null);
+        System.out.println("Y: " + x);
+        System.out.println("X: " + y);
     }
     
     public void resetMotion()
@@ -60,7 +63,7 @@ public class Bird extends Thread
             
             ticks++;
             
-            if(gamePanel.gameActive)
+            if(isAlive)
             {
                 if(ticks % 2 == 0 && yMotion < 10)
                 {
