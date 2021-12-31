@@ -45,7 +45,8 @@ public class ServerListener extends Thread implements java.util.Observer
             {
                 if (obj instanceof String) 
                 {
-                    
+                    String str = (String)obj;
+                    System.out.println(str);
                 }
                 if (obj instanceof Integer) 
                 {

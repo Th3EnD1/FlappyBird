@@ -42,6 +42,7 @@ public class ClientGamePanel extends JPanel
             public void mousePressed(MouseEvent me) 
             { 
                 System.out.println("Mouse Pressed");
+                send("Mouse Pressed");
                 if (gameActive) 
                 {
                     bird.resetMotion();

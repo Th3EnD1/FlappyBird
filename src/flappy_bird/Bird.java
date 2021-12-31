@@ -5,6 +5,8 @@
  */
 package flappy_bird;
 
+import client.ClientGamePanel;
+import static client.ClientGamePanel.height;
 import java.awt.*;
 import javax.swing.*;
 /**
@@ -14,22 +16,24 @@ import javax.swing.*;
 public class Bird extends Thread
 {
     JPanel gamePanel;
-    int x = GameManager.width / 2 - 10, y = GameManager.height / 2 - 10;
+    int scrennWidth = 1200;
+    int screenHeight = 700;
+    int x = (scrennWidth / 2) - 10;
+    int y = (screenHeight / 2) - 10;
     int width = 50;
     int height = 50;
     Image birdImage;
     public int yMotion;
     int ticks;
     public boolean isAlive;
-    
     public int midX, midY;
     
     public Bird(JPanel gamePanel)
     {
+        this.gamePanel = gamePanel;
         midX = (x + width) / 2;
         midY = (y + height) / 2;
         isAlive = false;
-        this.gamePanel = gamePanel;
         ImageIcon img = new ImageIcon("laBird.png");
         birdImage = img.getImage();
         birdImage = birdImage.getScaledInstance(50, 35, Image.SCALE_DEFAULT);
@@ -39,8 +43,6 @@ public class Bird extends Thread
     public void drawBird(Graphics g)
     {
         g.drawImage(birdImage, x, y, width, height, null);
-        System.out.println("Y: " + x);
-        System.out.println("X: " + y);
     }
     
     public void resetMotion()
@@ -72,9 +74,9 @@ public class Bird extends Thread
                 y += yMotion;
                 //birdRec.y += yMotion;
 
-                if(y + yMotion >= GameManager.height - 125)
+                if(y + yMotion >= screenHeight - 125)
                 {
-                    y = GameManager.height - 115;
+                    y = screenHeight - 115;
                     //birdRec.y = GameManager.height - 115;
                 }
             }
@@ -86,9 +88,9 @@ public class Bird extends Thread
                 }
                 y += yMotion;
                 
-                if(y + yMotion >= GameManager.height - 125)
+                if(y + yMotion >= screenHeight - 125)
                 {
-                    y = GameManager.height - 115;
+                    y = screenHeight - 115;
                     //birdRec.y = GameManager.height - 115;
                 }
             }
