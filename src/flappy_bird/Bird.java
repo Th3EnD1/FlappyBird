@@ -18,8 +18,8 @@ public class Bird extends Thread
     JPanel gamePanel;
     int scrennWidth = 1200;
     int screenHeight = 700;
-    int x = (scrennWidth / 2) - 10;
-    int y = (screenHeight / 2) - 10;
+    public int x = (scrennWidth / 2) - 10;
+    public int y = (screenHeight / 2) - 10;
     int width = 50;
     int height = 50;
     Image birdImage;
@@ -27,6 +27,7 @@ public class Bird extends Thread
     int ticks;
     public boolean isAlive;
     public int midX, midY;
+    public int[] birdLocation;
     
     public Bird(JPanel gamePanel)
     {
@@ -37,6 +38,9 @@ public class Bird extends Thread
         ImageIcon img = new ImageIcon("laBird.png");
         birdImage = img.getImage();
         birdImage = birdImage.getScaledInstance(50, 35, Image.SCALE_DEFAULT);
+        birdLocation = new int[2];
+        birdLocation[0] = x;
+        birdLocation[1] = y;
         start();
     }
     
@@ -51,6 +55,8 @@ public class Bird extends Thread
         {
             yMotion = 0;
         }
+        birdLocation[0] = x;
+        birdLocation[1] = y;
     }
     
     public void run()
@@ -94,6 +100,8 @@ public class Bird extends Thread
                     //birdRec.y = GameManager.height - 115;
                 }
             }
+            birdLocation[0] = x;
+            birdLocation[1] = y;
             gamePanel.repaint();
         }
     }

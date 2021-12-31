@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import flappy_bird.Bird;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 
 public class ClientGamePanel extends JPanel
@@ -24,6 +25,7 @@ public class ClientGamePanel extends JPanel
     public static int height;
     public Bird bird;
     boolean gameActive, started;
+
     
     ClientListener clientThread;
     
@@ -88,6 +90,7 @@ public class ClientGamePanel extends JPanel
 	super.paintComponent(g);
         g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),null);
         bird.drawBird(g);
+        send(bird.birdLocation);
     }
     
     public void send(Object obj) 

@@ -48,6 +48,12 @@ public class ServerListener extends Thread implements java.util.Observer
                     String str = (String)obj;
                     System.out.println(str);
                 }
+                if (obj instanceof int[])
+                {
+                    int[] location = (int[])obj;
+                    System.out.println("X: " + location[0]);
+                    System.out.println("Y: " + location[1]);
+                }
                 if (obj instanceof Integer) 
                 {
                     
