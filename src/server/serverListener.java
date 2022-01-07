@@ -4,6 +4,8 @@
  */
 package server;
 
+import flappy_bird.GameData;
+
 /**
  *
  * @author student
@@ -15,6 +17,7 @@ public class ServerListener extends Thread implements java.util.Observer
     private java.net.Socket socket;
     private java.io.ObjectInputStream in;
     private java.io.ObjectOutputStream out;
+    private GameData tempData;
     
     public ServerListener (InitServer server, int index, java.net.Socket socket) 
     {
@@ -29,15 +32,7 @@ public class ServerListener extends Thread implements java.util.Observer
         {
             in = new java.io.ObjectInputStream(socket.getInputStream());
             out = new java.io.ObjectOutputStream(socket.getOutputStream());
-            
-            if (index < 2) 
-            {
-                out.writeObject(new Integer(1));
-            }
-            else
-            {
-                out.writeObject(new Integer(2));
-            }
+            out.writeObject(index);
             
             out.flush();
             Object obj;
@@ -45,18 +40,31 @@ public class ServerListener extends Thread implements java.util.Observer
             {
                 if (obj instanceof String) 
                 {
-                    String str = (String)obj;
-                    System.out.println(str);
+                    
                 }
                 if (obj instanceof int[])
                 {
-                    int[] location = (int[])obj;
-                    System.out.println("X: " + location[0]);
-                    System.out.println("Y: " + location[1]);
+                    
                 }
                 if (obj instanceof Integer) 
                 {
                     
+                }
+                if (obj instanceof GameData)
+                {
+                    //tempData = (GameData)obj;
+                    //System.out.println(tempData.toString());
+                    //server.update(tempData);
+                    //((GameData)obj).toString();
+                    switch (((GameData)obj).state)
+                    {
+                        case 0:
+                            {
+                                System.out.println(((GameData) obj).toString());
+                            }break;
+                        default:
+                            throw new AssertionError();
+                    }
                 }
             }
         }

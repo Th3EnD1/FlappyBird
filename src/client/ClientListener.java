@@ -21,15 +21,12 @@ public class ClientListener extends Thread
                 {
                     if (obj instanceof Integer)
                     {
-                        
+                        clientPanel.index = (int)obj;
+                        System.out.println(clientPanel.index);
                     }
                     if (obj instanceof String)
                     {
-//                        String data = (String)obj;
-//                        System.out.println(data);
-//                        warCardGameClient.updateGUI(data);
-                            String data = "Test";
-                            System.out.println(data);
+                        
                     }
                     if (obj instanceof Boolean)
                     {
