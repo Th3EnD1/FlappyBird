@@ -16,10 +16,10 @@ public class Missile extends Thread
 {
     GameManager gamePanel;
     
-    int x = GameManager.width + 2000;
-    int y = GameManager.height / 2/*gamePanel.bird.y - ((gamePanel.bird.height) / 2)*/;
-    int imageWidth, imageHeight;
-    long Spawntime, currTime;
+    public int x = GameManager.width + 2000;
+    public int y = GameManager.height / 2/*gamePanel.bird.y - ((gamePanel.bird.height) / 2)*/;
+    public int imageWidth, imageHeight;
+    public long Spawntime, currTime;
     
     boolean isAlive;
     Image warningImage;

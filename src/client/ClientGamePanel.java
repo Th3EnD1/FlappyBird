@@ -44,7 +44,7 @@ public class ClientGamePanel extends JPanel
 
         addMouseListener(new MouseAdapter() 
         { 
-            public void mousePressed(MouseEvent me) 
+            public void mousePressed(MouseEvent me)
             { 
                 System.out.println("Mouse Pressed");
                 send("Mouse Pressed");

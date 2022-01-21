@@ -20,8 +20,8 @@ public class Coin extends Thread
     long spawnTime;
     boolean isAlive;
     boolean spawned;
-    int y, x = GameManager.width + 50;
-    int r = 15;
+    public int y, x = GameManager.width + 50;
+    public int r = 15;
     
     public Coin(GameManager gamePanel, int height, long spawnTime)
     {

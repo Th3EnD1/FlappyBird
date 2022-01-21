@@ -20,8 +20,8 @@ public class Bird extends Thread
     int screenHeight = 700;
     public int x = (scrennWidth / 2) - 10;
     public int y = (screenHeight / 2) - 10;
-    int width = 50;
-    int height = 50;
+    public int width = 50;
+    public int height = 50;
     Image birdImage;
     public int yMotion;
     int ticks;
