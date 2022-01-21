@@ -49,6 +49,8 @@ public class ServerGameManager extends Thread
     Coin tempCoin;
     Missile tempMissile;
 
+    boolean isAlive;
+
     public ServerGameManager(InitServer server)
     {
         this.server = server;
@@ -228,5 +230,30 @@ public class ServerGameManager extends Thread
                              (circleDistance.y - bird.height/2)^2;
 
         return (cornerDistance_sq <= (c.r^2));
+    }
+
+    public void run()
+    {
+        while(isAlive)
+        {
+            try
+            {
+                Thread.sleep(20);
+            }
+            catch (InterruptedException e) {}
+            
+            if (!frozen) 
+            {
+                x -= 10;
+                updatePipeProperties();
+            }
+            
+            if(x < -200)
+            {
+                isAlive = false;
+            }
+            
+            gamePanel.repaint();
+        }
     }
 }
