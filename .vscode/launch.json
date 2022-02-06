@@ -6,6 +6,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Server",
+            "request": "launch",
+            "mainClass": "server.InitServer"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "GUI.Main"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -16,6 +28,23 @@
             "request": "launch",
             "mainClass": "flappy_bird.GameManager",
             "projectName": "Flappy Bird_f254616b"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Server + Menu",
+            "configurations": [
+                "Server",
+                "Main"
+            ]
+        },
+        {
+            "name": "Server + 2 Menus",
+            "configurations": [
+                "Server",
+                "Main",
+                "Main"
+            ]
         }
     ]
 }

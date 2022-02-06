@@ -11,59 +11,65 @@ import flappy_bird.GameManager;
 import java.awt.Dimension;
 import client.ClientGamePanel;
 
-public class GameFrame extends JFrame
-{
+public class GameFrame extends JFrame {
     public JFrame f;
     JPanel panel;
-    
+    JPanel container;
+
     int frameNumber;
-    
-    public GameFrame()
-    {
+
+    public GameFrame() {
         this.setTitle("Flappy Bird By Eden");
         panel = new Menu(this);
-        this.add(panel);
-        //this.setPreferredSize(new Dimension(Menu.width, Menu.height));
+        panel.setBounds(0, 0, Menu.width, Menu.height);
+        container = new JPanel();
+        container.setLayout(null);
+        container.setSize(Menu.width, Menu.height);
+        container.add(panel);
+        // this.setPreferredSize(new Dimension(Menu.width, Menu.height));
+        this.setLayout(null);
         this.setSize(Menu.width, Menu.height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocation(200, 200);
-        this.setVisible(true);	
+        this.setVisible(true);
         this.setFocusable(false);
+        this.add(container);
     }
-    
-    public void updateFrame(int frameNumber)
-    {
+
+    public void updateFrame(int frameNumber) {
         this.frameNumber = frameNumber;
-        
-        switch(frameNumber)
-        {
-            case 1:
-            {
-                this.getContentPane().removeAll();
+
+        switch (frameNumber) {
+            case 1: {
+                container.removeAll();
                 panel = new GameManager();
-                
-                this.add(panel);
-                this.setSize(GameManager.width,GameManager.height);
+
+                panel.setBounds(0, 0, GameManager.width, GameManager.height);
+                container.setSize(GameManager.width, GameManager.height);
+                container.add(panel);
+                this.setSize(GameManager.width + 100, GameManager.height);
                 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 this.setResizable(false);
                 this.setLocation(200, 200);
-                this.setVisible(true);	
+                this.setVisible(true);
                 this.setFocusable(false);
-            }break;
-            
-            case 2:
-            {
-                //ClientGamePanel run = new ClientGamePanel();
-                this.getContentPane().removeAll();
+            }
+                break;
+
+            case 2: {
+                // ClientGamePanel run = new ClientGamePanel();
+                container.removeAll();
                 panel = new ClientGamePanel();
-                
-                this.add(panel);
-                this.setSize(GameManager.width,GameManager.height);
+
+                panel.setBounds(0, 0, GameManager.width, GameManager.height);
+                container.setSize(GameManager.width, GameManager.height);
+                container.add(panel);
+                this.setSize(GameManager.width + 512, GameManager.height);
                 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 this.setResizable(false);
                 this.setLocation(200, 200);
-                this.setVisible(true);	
+                this.setVisible(true);
                 this.setFocusable(false);
             }
         }
