@@ -253,7 +253,6 @@ public class GameManager extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", 1, 75));
         g.drawString("" + score, 580, 100);
-        send("Test");
     }
 
     public void coinsCollision() {
