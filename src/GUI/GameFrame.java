@@ -7,9 +7,7 @@ package GUI;
 import flappy_bird.GameManager;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import flappy_bird.GameManager;
-import java.awt.Dimension;
-import client.ClientGamePanel;
+//import client.ClientGamePanel;
 
 public class GameFrame extends JFrame {
     public JFrame f;
@@ -43,12 +41,12 @@ public class GameFrame extends JFrame {
         switch (frameNumber) {
             case 1: {
                 container.removeAll();
-                panel = new GameManager();
+                panel = new GameManager(false);
 
                 panel.setBounds(0, 0, GameManager.width, GameManager.height);
                 container.setSize(GameManager.width, GameManager.height);
                 container.add(panel);
-                this.setSize(GameManager.width + 100, GameManager.height);
+                this.setSize(GameManager.width, GameManager.height);
                 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 this.setResizable(false);
                 this.setLocation(200, 200);
@@ -60,7 +58,7 @@ public class GameFrame extends JFrame {
             case 2: {
                 // ClientGamePanel run = new ClientGamePanel();
                 container.removeAll();
-                panel = new ClientGamePanel();
+                panel = new GameManager(true);
 
                 panel.setBounds(0, 0, GameManager.width, GameManager.height);
                 container.setSize(GameManager.width, GameManager.height);

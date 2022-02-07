@@ -15,19 +15,6 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "GUI.Main"
-        },
-        {
-            "type": "java",
-            "name": "Launch Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Launch GameManager",
-            "request": "launch",
-            "mainClass": "flappy_bird.GameManager",
-            "projectName": "Flappy Bird_f254616b"
         }
     ],
     "compounds": [

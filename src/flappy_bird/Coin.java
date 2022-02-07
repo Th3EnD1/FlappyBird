@@ -5,24 +5,21 @@
  */
 package flappy_bird;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 /**
  *
  * @author Eden
  */
-public class Coin extends Thread
-{
+public class Coin extends Thread {
     GameManager gamePanel;
     long spawnTime;
     boolean isAlive;
     boolean spawned;
     int y, x = GameManager.width + 50;
     int r = 15;
-    
-    public Coin(GameManager gamePanel, int height, long spawnTime)
-    {
+
+    public Coin(GameManager gamePanel, int height, long spawnTime) {
         isAlive = true;
         spawned = false;
         this.spawnTime = spawnTime;
@@ -30,34 +27,29 @@ public class Coin extends Thread
         this.gamePanel = gamePanel;
         start();
     }
-    
-    public void run()
-    {
-        try
-        {
+
+    public void run() {
+        try {
             Thread.sleep(spawnTime);
+        } catch (InterruptedException e) {
         }
-        catch (InterruptedException e) {}
-        while(isAlive)
-        {
-            try
-            {
+        while (isAlive) {
+            try {
                 Thread.sleep(20);
+            } catch (InterruptedException e) {
             }
-            catch (InterruptedException e) {}
-            
+
             x -= 10;
-            
-            if(x < -200)
-            {
+
+            if (x < -200) {
                 isAlive = false;
             }
-            
+
             gamePanel.repaint();
         }
     }
-    public void drawCoin(Graphics g)
-    {
-        g.drawImage(GameManager.coinImage, x, y, r*2, r*2, null);
+
+    public void drawCoin(Graphics g) {
+        g.drawImage(GameManager.coinImage, x, y, r * 2, r * 2, null);
     }
 }

@@ -5,18 +5,12 @@
  */
 package GUI;
 
-import client.ClientGamePanel;
-
 /**
  *
- * @author student
+ * @author Eden
  */
-public class Main
-{
-    public static void main(String[] args)
-    {
-        //Menu menu = new Menu();
-        //ClientGamePanel run = new ClientGamePanel();
+public class Main {
+    public static void main(String[] args) {
         GameFrame game = new GameFrame();
     }
 }

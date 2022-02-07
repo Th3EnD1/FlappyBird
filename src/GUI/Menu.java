@@ -13,8 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import flappy_bird.GameManager;
-
 /**
  *
  * @author Eden
