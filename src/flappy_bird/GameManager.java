@@ -14,6 +14,7 @@ import java.util.Random;
 import javax.swing.*;
 
 import client.ClientListener;
+import server.ServerData;
 
 /**
  *
@@ -29,7 +30,7 @@ public class GameManager extends JPanel {
 
     ClientListener clientListener;
     public BufferedImage gameScreen;
-    // public Data enemyData;
+    public ServerData enemyData;
     public int player;
 
     // Single player
@@ -52,7 +53,7 @@ public class GameManager extends JPanel {
     static Image coinImage = ((new ImageIcon("coin.gif")).getImage()).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
 
     boolean gameActive, started;
-    int score;
+    public int score;
     long lastPipe;
     long pipeSpawnTime;
     long cooldownTime;
@@ -71,7 +72,7 @@ public class GameManager extends JPanel {
         // Initializing the game panel and game objects
 
         game = this;
-        width = 1200;
+        width = 1024;// 1200;
         height = 700;
         backgroundImage = (new ImageIcon("background.jpg")).getImage();
 
@@ -253,6 +254,9 @@ public class GameManager extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", 1, 75));
         g.drawString("" + score, 580, 100);
+
+        screenShot();
+        send(new ServerData(this, 1));
     }
 
     public void coinsCollision() {
@@ -309,6 +313,16 @@ public class GameManager extends JPanel {
             this.objectOutputStream.flush();
         } catch (java.io.IOException ex) {
 
+        }
+    }
+
+    public void screenShot() {
+        try {
+            Point p = getLocationOnScreen();
+            Dimension dim = new Dimension(1024, 700);
+            Rectangle rect = new Rectangle(p, dim);
+            gameScreen = (new Robot()).createScreenCapture(rect);
+        } catch (Exception e) {
         }
     }
 }

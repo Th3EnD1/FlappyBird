@@ -10,13 +10,13 @@ import java.awt.Graphics;
 import flappy_bird.GameManager;
 
 public class EnemyPanel extends JPanel {
-    // GameManager game;
+    GameManager game;
     int width;
     int height;
     public Image enemyScreen;
 
-    public EnemyPanel(/* GameManager game */) {
-        // this.game = game;
+    public EnemyPanel(GameManager game) {
+        this.game = game;
         width = 512;
         height = 350;
 
@@ -26,16 +26,16 @@ public class EnemyPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // isEnemyData();
+
+        // Duplicates the game screen into the mini screen
+        if (game.enemyData.player == game.player) {
+            enemyScreen = game.enemyData.screen.getImage();
+        }
         g.drawImage(enemyScreen, 0, height, width, height, null);
 
         g.setColor(Color.white);
         g.setFont(new Font("Arial", 1, 25));
         g.drawString("Health: ?????", (height / 2) - 50, height / 5);
-        // g.drawString("FirePower: " + game.ship.shipLevel, (height / 2) - 50, (height
-        // / 5) * 2);
-        // g.drawString("Score: " + game.gameScore, (height / 2) - 50, (height / 5) *
-        // 3);
 
         repaint();
     }

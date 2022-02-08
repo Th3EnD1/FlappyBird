@@ -38,12 +38,9 @@ public class ServerListener extends Thread implements java.util.Observer {
             out.flush();
             Object obj;
             while ((obj = in.readObject()) != null) {
-                if (obj instanceof String) {
-                    System.out.println((String) obj);
-                }
-                if (obj instanceof Integer) {
-
-                }
+                ServerData temp = (ServerData) obj;
+                server.update(temp);
+                System.out.println("Got" + temp.toString());
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

@@ -61,7 +61,7 @@ public class GameFrame extends JFrame {
                 container.setSize(GameManager.width, GameManager.height);
                 container.add(panel);
 
-                enemyPanel = new EnemyPanel(/* panel */);
+                enemyPanel = new EnemyPanel((GameManager) panel);
                 enemyPanel.setBounds(GameManager.width, 0, 512, GameManager.height);
                 this.add(enemyPanel);
                 this.setSize(GameManager.width + 512, GameManager.height);
