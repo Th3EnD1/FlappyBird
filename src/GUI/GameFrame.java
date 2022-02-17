@@ -5,6 +5,8 @@
 package GUI;
 
 import flappy_bird.GameManager;
+import server.InitServer;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 //import client.ClientGamePanel;

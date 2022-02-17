@@ -6,7 +6,7 @@ package server;
 
 /**
  *
- * @author student
+ * @author Eden
  */
 public class ServerListener extends Thread implements java.util.Observer {
     private InitServer server;
@@ -38,6 +38,15 @@ public class ServerListener extends Thread implements java.util.Observer {
             out.flush();
             Object obj;
             while ((obj = in.readObject()) != null) {
+                if (obj instanceof String) {
+                    String str = (String) obj;
+                    if (str == "ready") {
+                        server.readyCounter++;
+                        if (server.readyCheck())
+                            server.update("start");
+                    }
+                    System.out.println(str);
+                }
                 ServerData temp = (ServerData) obj;
                 server.update(temp);
                 System.out.println("Got" + temp.toString());
