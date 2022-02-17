@@ -5,6 +5,8 @@
 package GUI;
 
 import flappy_bird.GameManager;
+import server.InitServer;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 //import client.ClientGamePanel;
@@ -17,6 +19,9 @@ public class GameFrame extends JFrame {
     Menu menuPanel;
     JPanel container;
     EnemyPanel enemyPanel;
+
+    int port = 25565;
+    InitServer server = new InitServer(port);
 
     int frameNumber;
 

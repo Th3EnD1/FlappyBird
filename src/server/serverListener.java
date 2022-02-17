@@ -9,16 +9,24 @@ package server;
  * @author student
  */
 public class ServerListener extends Thread implements java.util.Observer {
+    public enum Status {
+        LOBBY,
+        WAITING_IN_QUEUE,
+        IN_MATCH
+    }
+
     private InitServer server;
     private int index;
     private java.net.Socket socket;
     private java.io.ObjectInputStream in;
     private java.io.ObjectOutputStream out;
+    public Status currentStatus;
 
     public ServerListener(InitServer server, int index, java.net.Socket socket) {
         this.server = server;
         this.index = index;
         this.socket = socket;
+        this.currentStatus = Status.LOBBY;
     }
 
     public void run() {
@@ -38,7 +46,22 @@ public class ServerListener extends Thread implements java.util.Observer {
             out.flush();
             Object obj;
             while ((obj = in.readObject()) != null) {
+                if (obj instanceof String) {
+                    switch ((String) obj) {
+                        case "Join": {
+                            if (currentStatus == Status.LOBBY) {
+                                server.addWaitingClients(index);
+                                currentStatus = Status.WAITING_IN_QUEUE;
+                            }
+                        }
+                            break;
+                        case "Cancel":
+                            server.cancelClientSearching(index);
+                            break;
+                    }
+                }
                 ServerData temp = (ServerData) obj;
+                temp.player = index;
                 server.update(temp);
                 System.out.println("Got" + temp.toString());
             }

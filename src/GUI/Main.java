@@ -5,12 +5,16 @@
  */
 package GUI;
 
+import server.InitServer;
+
 /**
  *
  * @author Eden
  */
 public class Main {
     public static void main(String[] args) {
-        GameFrame game = new GameFrame();
+        int port = 25565;
+        new GameFrame();
+        new InitServer().handleClients(port);
     }
 }

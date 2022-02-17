@@ -27,10 +27,10 @@ public class EnemyPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Duplicates the game screen into the mini screen
-        if (game.enemyData.player == game.player) {
-            enemyScreen = game.enemyData.screen.getImage();
-        }
+        // // Duplicates the game screen into the mini screen
+        // if (game.enemyData.player == game.player) {
+        // enemyScreen = game.enemyData.screen.getImage();
+        // }
         g.drawImage(enemyScreen, 0, height, width, height, null);
 
         g.setColor(Color.white);

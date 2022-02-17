@@ -32,6 +32,7 @@ public class GameManager extends JPanel {
     public BufferedImage gameScreen;
     public ServerData enemyData;
     public int player;
+    boolean multiPlayer;
 
     // Single player
 
@@ -61,6 +62,7 @@ public class GameManager extends JPanel {
     Random rnd;
 
     public GameManager(boolean multiPlayer) {
+        this.multiPlayer = multiPlayer;
         if (multiPlayer) {
             // enemyData = new Data(this,0);
             player = 0;
@@ -255,8 +257,10 @@ public class GameManager extends JPanel {
         g.setFont(new Font("Arial", 1, 75));
         g.drawString("" + score, 580, 100);
 
-        screenShot();
-        send(new ServerData(this, 1));
+        if (multiPlayer) {
+            // screenShot();
+            send(new ServerData(this, 1));
+        }
     }
 
     public void coinsCollision() {
