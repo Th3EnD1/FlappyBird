@@ -14,14 +14,31 @@ public class ClientListener extends Thread {
         while (true) {
             try {
                 Object obj;
-                while ((obj = clientPanel.objectInputStream.readObject()) != null) {
-                    if (obj instanceof ServerData) {
-                        clientPanel.enemyData = (ServerData) obj;
-                        System.out.println("got: " + clientPanel.enemyData.toString());
+                while ((obj = clientPanel.objectInputStream.readObject()) != null) 
+                {
+                    if (obj instanceof ServerData) 
+                    {
+                        ServerData temp = (ServerData) obj;
+                        if (temp.player != clientPanel.player) 
+                        {
+                            clientPanel.oppScore = temp.score;
+                            clientPanel.oppDead = true;
+                        }
                     }
-                    if (obj instanceof Integer) {
+                    
+                    if (obj instanceof Integer) 
+                    {
                         clientPanel.player = (Integer) obj;
-                        // System.out.println(clientPanel.player);
+                    }
+                    
+                    if (obj instanceof String) 
+                    {
+                        String temp = (String) obj;
+                        if ("start".equals(temp))
+                        {
+                            clientPanel.waiting = false;
+                            clientPanel.gameActive = false;
+                        }
                     }
                 }
             } catch (java.io.IOException ex) {

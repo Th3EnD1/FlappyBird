@@ -25,57 +25,60 @@ public class ServerListener extends Thread implements java.util.Observer {
         try {
             in = new java.io.ObjectInputStream(socket.getInputStream());
             out = new java.io.ObjectOutputStream(socket.getOutputStream());
-
-            // if (index < 2)
-            // {
-            // out.writeObject(new Integer(1));
-            // }
-            // else
-            // {
-            // out.writeObject(new Integer(2));
-            // }
-
+            out.writeObject(index);
             out.flush();
+            
             Object obj;
-            while ((obj = in.readObject()) != null) {
-                if (obj instanceof String) {
+            while ((obj = in.readObject()) != null)
+            {
+                if (obj instanceof String)
+                {
                     String str = (String) obj;
-                    if (str == "ready") {
+                    if ("ready".equals(str))
+                    {
                         server.readyCounter++;
                         if (server.readyCheck())
+                        {
                             server.update("start");
+                            server.readyCounter = 0;
+                        }   
                     }
-                    System.out.println(str);
                 }
-                ServerData temp = (ServerData) obj;
-                server.update(temp);
-                System.out.println("Got" + temp.toString());
+                
+                if (obj instanceof ServerData)
+                {
+                    ServerData temp = (ServerData) obj;
+                    server.update(temp);
+                    System.out.println("Got Data: " + temp.toString());
+                }
             }
-        } catch (Exception e) {
+        } catch (Exception e) 
+        {
             System.out.println("Error: " + e.getMessage());
-        } finally {
-            try {
+        } finally 
+        {
+            try 
+            {
                 in.close();
-            } catch (Exception e2) {
-            }
-            try {
+            } catch (Exception e2) {}
+            try 
+            {
                 out.close();
-            } catch (Exception e2) {
-            }
-            try {
+            } catch (Exception e2) {}
+            try 
+            {
                 socket.close();
-            } catch (Exception e2) {
-            }
+            } catch (Exception e2) {}
             server.remove(index, this);
         }
     }
 
-    public void update(java.util.Observable o, Object arg) {
-        try {
+    public void update(java.util.Observable o, Object arg) 
+    {
+        try 
+        {
             out.writeObject(arg);
             out.flush();
-        } catch (java.io.IOException ex) {
-
-        }
+        } catch (java.io.IOException ex) {}
     }
 }

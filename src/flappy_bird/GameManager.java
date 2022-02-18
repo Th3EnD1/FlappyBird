@@ -30,10 +30,12 @@ public class GameManager extends JPanel {
 
     ClientListener clientListener;
     public BufferedImage gameScreen;
-    public ServerData enemyData;
     public int player;
     private boolean multiplayer;
 
+    public int oppScore;
+    public boolean oppDead;
+    boolean dataSent;
     // Single player
 
     public static GameManager game;
@@ -53,7 +55,7 @@ public class GameManager extends JPanel {
     Image backgroundImage;
     static Image coinImage = ((new ImageIcon("coin.gif")).getImage()).getScaledInstance(30, 30, Image.SCALE_DEFAULT);
 
-    boolean gameActive, started;
+    public boolean gameActive, clicked, waiting;
     public int score;
     long lastPipe;
     long pipeSpawnTime;
@@ -61,11 +63,20 @@ public class GameManager extends JPanel {
     boolean pipesDisabled;
     Random rnd;
 
-    public GameManager(boolean multiPlayer) {
+    public GameManager(boolean multiPlayer) 
+    {
+        oppScore = 0;
+        clicked = false;
+        dataSent = false;
+        gameActive = false;
+        waiting = false;
+        
         this.multiplayer = multiPlayer;
-        if (multiPlayer) {
-            // enemyData = new Data(this,0);
+        if (multiPlayer) 
+        {
+            oppDead = false;
             player = 0;
+            waiting = true;
             this.clientListener = new ClientListener(this);
             this.connect();
             this.clientListener.start();
@@ -79,9 +90,6 @@ public class GameManager extends JPanel {
         height = 700;
         backgroundImage = (new ImageIcon("background.jpg")).getImage();
 
-        gameActive = false;
-        started = false;
-
         bird = new Bird(this);
         pipes = new ArrayList<Pipe>();
         coins = new ArrayList<Coin>();
@@ -94,11 +102,24 @@ public class GameManager extends JPanel {
         // Mouse functionality
 
         addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent me) {
-                if (gameActive) {
+            public void mousePressed(MouseEvent me) 
+            {
+                if (!clicked && !waiting) 
+                {
+                    clicked = true;
+                }
+                if (gameActive) 
+                {
                     bird.resetMotion();
                     bird.yMotion -= 14;
-                } else {
+                }
+                else 
+                {
+                    if (multiplayer)
+                    {
+                        dataSent = false;
+                    }
+                    
                     bird = new Bird(game);
                     pipes.clear();
                     coins.clear();
@@ -106,52 +127,61 @@ public class GameManager extends JPanel {
                     bird.yMotion = 0;
                     score = 0;
                     gameActive = true;
-                    started = true;
                 }
             }
         });
     }
 
-    public void collision() {
+    public void collision() 
+    {
         Pipe currentPipe;
         Missile currentMissile;
 
-        for (int i = 0; i < pipes.size(); i++) {
+        for (int i = 0; i < pipes.size(); i++) 
+        {
             currentPipe = pipes.get(i);
             // collision with the top part of the pipe
             if (bird.x < currentPipe.topPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.topPipeX
                     && bird.y < currentPipe.topPipeY + currentPipe.imageHeight
-                    && bird.height + bird.y > currentPipe.topPipeY) {
+                    && bird.height + bird.y > currentPipe.topPipeY) 
+            {
                 gameActive = false;
             }
 
             // collision with the bottom part of the pipe
             if (bird.x < currentPipe.botPipeX + currentPipe.imageWidth && bird.x + bird.width > currentPipe.botPipeX
                     && bird.y < currentPipe.botPipeY + currentPipe.imageHeight
-                    && bird.height + bird.y > currentPipe.botPipeY) {
+                    && bird.height + bird.y > currentPipe.botPipeY) 
+            {
                 gameActive = false;
             }
         }
 
-        for (int i = 0; i < missiles.size(); i++) {
+        for (int i = 0; i < missiles.size(); i++) 
+        {
             currentMissile = missiles.get(i);
             // collision with the missile
             if (bird.x < currentMissile.x + currentMissile.imageWidth && bird.x + bird.width > currentMissile.x
                     && bird.y < currentMissile.y + currentMissile.imageHeight
-                    && bird.height + bird.y > currentMissile.y) {
+                    && bird.height + bird.y > currentMissile.y) 
+            {
                 gameActive = false;
             }
         }
 
-        if (bird.y >= height - 115 || bird.y <= 0) {
+        if (bird.y >= height - 115 || bird.y <= 0) 
+        {
             gameActive = false;
         }
     }
 
-    public void addScore() {
-        for (int i = 0; i < pipes.size(); i++) {
+    public void addScore() 
+    {
+        for (int i = 0; i < pipes.size(); i++) 
+        {
             Pipe temp = pipes.get(i);
-            if (!temp.scored && temp.x + temp.imageWidth <= bird.x) {
+            if (!temp.scored && temp.x + temp.imageWidth <= bird.x) 
+            {
                 temp.scored = true;
                 score++;
             }
@@ -162,31 +192,37 @@ public class GameManager extends JPanel {
         pipeSpawnTime = System.currentTimeMillis();
         Coin c;
         int numOfCoins = rnd.nextInt(7);
-        if (numOfCoins != 0) {
+        if (numOfCoins != 0) 
+        {
             int interval = (int) (cooldownTime / numOfCoins);
             numOfCoins--;
-            for (int i = 0; i < numOfCoins; i++) {
+            for (int i = 0; i < numOfCoins; i++) 
+            {
                 c = new Coin(this, rnd.nextInt(400) + 150, interval * (i + 1));
                 coins.add(c);
             }
         }
     }
 
-    public void missileSpawner() {
+    public void missileSpawner() 
+    {
         Random randomNum = new Random();
         int rndNum = randomNum.nextInt(4) + 1;
-        if (rndNum == 4 && missiles.size() < 1) {
+        if (rndNum == 4 && missiles.size() < 1) 
+        {
             missiles.add(new Missile(this));
             pipesDisabled = true;
         }
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) 
+    {
         super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
         g.setColor(Color.white);
 
-        if (gameActive) {
+        if (gameActive && !waiting && clicked) 
+        {
             collision();
             coinsCollision();
             addScore();
@@ -194,9 +230,11 @@ public class GameManager extends JPanel {
 
             // Spawns pipes or miislise on cooldown
             long time = System.currentTimeMillis();
-            if (time > lastPipe + cooldownTime && gameActive) {
+            if (time > lastPipe + cooldownTime && gameActive) 
+            {
                 missileSpawner();
-                if (!pipesDisabled) {
+                if (!pipesDisabled) 
+                {
                     pipes.add(new Pipe(this));
                     lastPipe = time;
                     randomizeCoins();
@@ -204,11 +242,14 @@ public class GameManager extends JPanel {
             }
 
             // Draws the pipes
-            for (int i = 0; i < pipes.size(); i++) {
+            for (int i = 0; i < pipes.size(); i++) 
+            {
                 tempPipe = pipes.get(i);
-                if (tempPipe.isAlive) {
+                if (tempPipe.isAlive) 
+                {
                     tempPipe.drawPipe(g);
-                } else {
+                } else 
+                {
                     pipes.remove(tempPipe);
                 }
             }
@@ -234,35 +275,53 @@ public class GameManager extends JPanel {
                     pipesDisabled = false;
                 }
             }
-        } else if (started) {
+        }
+        else if (waiting)
+        {
+            g.setFont(new Font("Arial", 1, 150));
+            g.drawString("Waiting for opponent...", 190, 375);
+        }
+        else if(!clicked) 
+        {
+            g.setFont(new Font("Arial", 1, 150));
+            g.drawString("Click To Start!", 110, 375);
+        }
+        else if (!gameActive) 
+        {
             bird.drawBird(g);
 
-            for (int i = 0; i < pipes.size(); i++) {
+            //Draws the remaining pipes
+            for (int i = 0; i < pipes.size(); i++) 
+            {
                 Pipe temp = pipes.get(i);
-                if (temp.isAlive) {
+                if (temp.isAlive) 
+                {
                     temp.drawPipe(g);
                     temp.frozen = true;
-                } else {
+                } 
+                else 
+                {
                     pipes.remove(temp);
                 }
             }
+            
+            if (multiplayer && !dataSent) 
+            {
+                send(new ServerData(this));
+                dataSent = true;
+                waiting = true;
+                clicked = false;
+                send("ready");
+            }
+            
             g.setFont(new Font("Arial", 1, 150));
             g.drawString("Game Over!", 190, 375);
             g.setFont(new Font("Arial", 1, 40));
             g.drawString("Click To Start Again", 450, 450);
-        } else {
-            g.setFont(new Font("Arial", 1, 150));
-            g.drawString("Click To Start!", 110, 375);
         }
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", 1, 75));
         g.drawString("" + score, 580, 100);
-
-        if (multiplayer) {
-            screenShot();
-            send(new ServerData(this, 1));
-        }
-
     }
 
     public void coinsCollision() {

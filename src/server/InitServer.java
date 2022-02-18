@@ -1,7 +1,6 @@
 package server;
 
 public class InitServer extends java.util.Observable {
-    public ServerGameManager game;
     public int readyCounter = 0;
 
     public static void main(String[] args) {
@@ -10,8 +9,6 @@ public class InitServer extends java.util.Observable {
     }
 
     public void handleClients(int port) {
-        // game = new ServerGameManager(this);
-        // game.start();
         java.net.ServerSocket serverSocket = null;
         try {
             System.out.println("The Server is ready...");
@@ -34,8 +31,9 @@ public class InitServer extends java.util.Observable {
         }
     }
 
-    public boolean readyCheck() {
-        if (readyCounter == 0)
+    public boolean readyCheck() 
+    {
+        if (readyCounter == 2)
             return true;
         else
             return false;
