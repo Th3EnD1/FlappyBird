@@ -113,7 +113,7 @@ public class GameManager extends JPanel {
                     bird.resetMotion();
                     bird.yMotion -= 14;
                 }
-                else 
+                else if (clicked && !waiting)
                 {
                     if (multiplayer)
                     {
@@ -278,13 +278,13 @@ public class GameManager extends JPanel {
         }
         else if (waiting)
         {
-            g.setFont(new Font("Arial", 1, 150));
-            g.drawString("Waiting for opponent...", 190, 375);
+            g.setFont(new Font("Arial", 1, 80));
+            g.drawString("Waiting for opponent...", 100, 375);
         }
         else if(!clicked) 
         {
-            g.setFont(new Font("Arial", 1, 150));
-            g.drawString("Click To Start!", 110, 375);
+            g.setFont(new Font("Arial", 1, 100));
+            g.drawString("Click To Start!", 160, 375);
         }
         else if (!gameActive) 
         {
@@ -315,13 +315,13 @@ public class GameManager extends JPanel {
             }
             
             g.setFont(new Font("Arial", 1, 150));
-            g.drawString("Game Over!", 190, 375);
+            g.drawString("Game Over!", 100, 335);
             g.setFont(new Font("Arial", 1, 40));
-            g.drawString("Click To Start Again", 450, 450);
+            g.drawString("Click To Start Again", 360, 410);
         }
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", 1, 75));
-        g.drawString("" + score, 580, 100);
+        g.drawString("" + score, 500, 100);
     }
 
     public void coinsCollision() {
