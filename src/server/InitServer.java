@@ -13,7 +13,7 @@ public class InitServer extends java.util.Observable {
         try {
             System.out.println("The Server is ready...");
             serverSocket = new java.net.ServerSocket(port);
-            for (int i = 0;; i++) {
+            for (int i = 1;; i++) {
                 java.net.Socket socket = serverSocket.accept();
                 update("A new client: " + i);
                 ServerListener clientThread = new ServerListener(this, i, socket);

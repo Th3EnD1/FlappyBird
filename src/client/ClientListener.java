@@ -18,11 +18,22 @@ public class ClientListener extends Thread {
                 {
                     if (obj instanceof ServerData) 
                     {
-                        ServerData temp = (ServerData) obj;
-                        if (temp.player != clientPanel.player) 
+                        ServerData data = (ServerData) obj;
+                        if (data.state == 1)
                         {
-                            clientPanel.oppScore = temp.score;
-                            clientPanel.oppDead = true;
+                            if (data.player != clientPanel.player) 
+                            {
+                                clientPanel.oppScore = 0;
+                                clientPanel.oppDead = false;
+                            }
+                        }
+                        if (data.state == 2)
+                        {
+                            if (data.player != clientPanel.player) 
+                            {
+                                clientPanel.oppScore = data.score;
+                                clientPanel.oppDead = true;
+                            }
                         }
                     }
                     

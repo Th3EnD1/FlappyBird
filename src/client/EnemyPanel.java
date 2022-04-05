@@ -36,16 +36,24 @@ public class EnemyPanel extends JPanel {
         }
         else
         {
-            if (game.score > game.oppScore) 
-            {
-                g.drawString("You Won!!!", (height / 2) - 50, 200);
-            }
-            else
-            {
-                g.drawString("You Lost :(", (height / 2) - 50, 200);
-            }
             g.drawString("Opponent's Score: " + game.oppScore, (height / 2) - 50, 150);
+            if (!game.waiting && !game.clicked)
+            {
+                if (game.score == game.oppScore)
+                {
+                    g.drawString("It's a tie!", (height / 2) - 50, 200);
+                }
+                else if (game.score > game.oppScore) 
+                {
+                    g.drawString("You Won!!!", (height / 2) - 50, 200);
+                }
+                else
+                {
+                    g.drawString("You Lost :(", (height / 2) - 50, 200);
+                }
+            }
         }
+        
         
 
         repaint();

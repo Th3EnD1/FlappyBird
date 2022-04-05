@@ -115,11 +115,6 @@ public class GameManager extends JPanel {
                 }
                 else if (clicked && !waiting)
                 {
-                    if (multiplayer)
-                    {
-                        dataSent = false;
-                    }
-                    
                     bird = new Bird(game);
                     pipes.clear();
                     coins.clear();
@@ -127,6 +122,11 @@ public class GameManager extends JPanel {
                     bird.yMotion = 0;
                     score = 0;
                     gameActive = true;
+                    if (multiplayer)
+                    {
+                        dataSent = false;
+                        send(new ServerData(game, 1));
+                    }
                 }
             }
         });
@@ -307,7 +307,7 @@ public class GameManager extends JPanel {
             
             if (multiplayer && !dataSent) 
             {
-                send(new ServerData(this));
+                send(new ServerData(this, 2));
                 dataSent = true;
                 waiting = true;
                 clicked = false;
