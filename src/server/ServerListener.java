@@ -43,6 +43,16 @@ public class ServerListener extends Thread implements java.util.Observer {
                             server.readyCounter = 0;
                         }   
                     }
+                    
+                    if ("GameOver".equals(str))
+                    {
+                        server.gameOverCounter++;
+                        if (server.gameOverCounter == 2)
+                        {
+                            server.update("GameOver");
+                            server.gameOverCounter = 0;
+                        }
+                    }
                 }
                 
                 if (obj instanceof ServerData)

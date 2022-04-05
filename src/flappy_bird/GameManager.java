@@ -35,6 +35,8 @@ public class GameManager extends JPanel {
 
     public int oppScore;
     public boolean oppDead;
+    public boolean oppWaiting;
+    public boolean gameOver;
     boolean dataSent;
     // Single player
 
@@ -75,6 +77,8 @@ public class GameManager extends JPanel {
         if (multiPlayer) 
         {
             oppDead = false;
+            oppWaiting = true;
+            gameOver = false;
             player = 0;
             waiting = true;
             this.clientListener = new ClientListener(this);
@@ -124,6 +128,7 @@ public class GameManager extends JPanel {
                     gameActive = true;
                     if (multiplayer)
                     {
+                        gameOver = false;
                         dataSent = false;
                         send(new ServerData(game, 1));
                     }
@@ -172,6 +177,11 @@ public class GameManager extends JPanel {
         if (bird.y >= height - 115 || bird.y <= 0) 
         {
             gameActive = false;
+        }
+        
+        if (!gameActive && multiplayer)
+        {
+            send("GameOver");
         }
     }
 

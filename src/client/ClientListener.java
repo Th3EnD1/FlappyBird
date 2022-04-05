@@ -23,8 +23,8 @@ public class ClientListener extends Thread {
                         {
                             if (data.player != clientPanel.player) 
                             {
-                                clientPanel.oppScore = 0;
                                 clientPanel.oppDead = false;
+                                clientPanel.oppWaiting = false;
                             }
                         }
                         if (data.state == 2)
@@ -33,6 +33,7 @@ public class ClientListener extends Thread {
                             {
                                 clientPanel.oppScore = data.score;
                                 clientPanel.oppDead = true;
+                                clientPanel.oppWaiting = true;
                             }
                         }
                     }
@@ -44,11 +45,17 @@ public class ClientListener extends Thread {
                     
                     if (obj instanceof String) 
                     {
-                        String temp = (String) obj;
-                        if ("start".equals(temp))
+                        String str = (String) obj;
+                        if ("start".equals(str))
                         {
                             clientPanel.waiting = false;
+                            clientPanel.oppWaiting = false;
                             clientPanel.gameActive = false;
+                        }
+                        
+                        if ("GameOver".equals(str))
+                        {
+                            clientPanel.gameOver = true;
                         }
                     }
                 }

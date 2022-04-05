@@ -2,6 +2,7 @@ package server;
 
 public class InitServer extends java.util.Observable {
     public int readyCounter = 0;
+    public int gameOverCounter = 0;
 
     public static void main(String[] args) {
         int port = 25565;

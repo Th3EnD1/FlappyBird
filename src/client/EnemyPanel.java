@@ -37,7 +37,7 @@ public class EnemyPanel extends JPanel {
         else
         {
             g.drawString("Opponent's Score: " + game.oppScore, (height / 2) - 50, 150);
-            if (!game.waiting && !game.clicked)
+            if (game.gameOver && !game.waiting && !game.oppWaiting)
             {
                 if (game.score == game.oppScore)
                 {
