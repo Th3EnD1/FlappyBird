@@ -42,7 +42,7 @@ public class Menu extends JPanel implements ActionListener {
         btn_Width = 150;
         btn_Height = 30;
 
-        btnJoin = new JButton("Join queue");
+        btnJoin = new JButton("Start Multiplayer");
         btnJoin.setBounds((width / 2) - 300, 250, btn_Width, btn_Height);
         add(btnJoin);
         btnJoin.setActionCommand("Join");
@@ -54,19 +54,19 @@ public class Menu extends JPanel implements ActionListener {
             }
         });
 
-        btnCancel = new JButton("Cancel Search");
-        btnCancel.setBounds((width / 2) - 300, 300, btn_Width, btn_Height);
-        add(btnCancel);
-        btnCancel.setActionCommand("Cancel");
-        btnCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Canceled multiplayer");
-            }
-        });
+//        btnCancel = new JButton("Cancel Search");
+//        btnCancel.setBounds((width / 2) - 300, 300, btn_Width, btn_Height);
+//        add(btnCancel);
+//        btnCancel.setActionCommand("Cancel");
+//        btnCancel.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                System.out.println("Canceled multiplayer");
+//            }
+//        });
 
         btnStartSingle = new JButton("Start Game");
-        btnStartSingle.setBounds((width / 2) + 100, 275, btn_Width, btn_Height);
+        btnStartSingle.setBounds((width / 2) + 100, 250, btn_Width, btn_Height);
         add(btnStartSingle);
         btnStartSingle.setActionCommand("Start");
         btnStartSingle.addActionListener(new ActionListener() {

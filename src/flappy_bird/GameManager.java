@@ -373,7 +373,7 @@ public class GameManager extends JPanel {
 
     public void connect() {
         try {
-            // java.net.Socket(java.net.InetAddress.getByName("79.183.186.221"), PORT);
+            //this.socket = new java.net.Socket(java.net.InetAddress.getByName("109.65.152.57"), PORT);
             this.socket = new java.net.Socket("localhost", PORT);
             this.objectOutputStream = new java.io.ObjectOutputStream(this.socket.getOutputStream());
             this.objectInputStream = new java.io.ObjectInputStream(this.socket.getInputStream());
